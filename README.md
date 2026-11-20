@@ -20,3 +20,21 @@ Rebuild after any change to `kit/` or `build/`:
     cd kit && npm install && npm run setup && cd .. && node build/build.js
 
 Read `site/facilitator.html` first. It has the run sheet, the risks, and a dry-run checklist for the parts that could not be tested without a Bob account.
+
+## Publish on GitHub Pages
+
+The workflow `.github/workflows/pages.yml` rebuilds the kit and the pages from source, checks that every link works under a `/repo-name/` path, and publishes `site/`.
+
+1. Create an empty repository on GitHub (Pages needs a public repository on a Free plan).
+2. Push this folder to it:
+
+        git remote add origin https://github.com/<you>/<repo>.git
+        git add -A && git commit -m "Workshop material"
+        git push -u origin HEAD
+
+3. On GitHub: **Settings, Pages, Build and deployment, Source: GitHub Actions**.
+4. Open the **Actions** tab. The run "Deploy workshop to GitHub Pages" publishes the site. If it ran before step 3, press **Re-run all jobs**.
+
+The site is then at `https://<you>.github.io/<repo>/`. Every later push to the default branch redeploys it.
+
+Check locally before you push: `node build/build.js && node build/check-site.js`.

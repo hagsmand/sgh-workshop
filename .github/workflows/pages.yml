@@ -1,0 +1,66 @@
+name: Deploy workshop to GitHub Pages
+
+on:
+  push:
+    branches: [main, master]   # whichever your default branch is
+  workflow_dispatch:   # lets you press "Run workflow" by hand
+
+# Least privilege: read the code, then (deploy job only) publish the site.
+permissions:
+  contents: read
+
+# One deploy at a time. A newer push waits, it does not cancel a deploy already running.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: kit/package-lock.json
+
+      # 1. Rebuild everything from source, so the deployed pages always match the kit.
+      - name: Install the kit
+        working-directory: kit
+        run: npm ci
+      - name: Make the practice data
+        working-directory: kit
+        run: npm run setup
+      - name: Run the kit tests
+        working-directory: kit
+        run: npm test
+
+      # 2. Rebuild the pages and the zip.
+      - name: Build the pages
+        run: node build/build.js
+
+      # 3. Check the pages work under https://<user>.github.io/<repo>/ before publishing.
+      - name: Check links under a repo path
+        run: node build/check-site.js
+
+      - uses: actions/configure-pages@v6
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      pages: write      # publish the site
+      id-token: write   # prove to Pages that this run is the one publishing
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5
