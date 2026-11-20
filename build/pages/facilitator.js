@@ -48,6 +48,7 @@ ${table(
       ['☐', 'Lab 3, the whole thing, on a fresh GitHub account. The Action goes green and the bad PR gets a comment.', 'See the lab 3 troubleshooting folds'],
       ['☐', 'Lab 3: one review finishes under the cost cap. <code>--max-cost 1</code> in the workflow is a guess. If the comment says "Bob did not finish" and the log shows a cost-limit message, raise <code>BOB_MAX_COST</code> to 2 in <code>lab3/ci/bob-review.yml</code> and rebuild.', 'Raise the cap'],
       ['☐', 'Lab 3: the second push <b>edits</b> the comment and does not add another.', '<code>gh pr comment --edit-last</code> needs a recent GitHub CLI. Runners have one'],
+      ['☐', 'Lab 4 step 1: after installing Insiders, a <b>Desktop</b> button shows at the top right of the window, and clicking it opens Bob Desktop. Check on every kind of laptop (Apple silicon, Intel, Windows).', 'Rewrite lab 4 step 1. The button only shows when Bob Desktop is available on that computer'],
       ['☐', 'Lab 4: Bob Desktop makes slides and a spreadsheet from the pack. Note which output formats it offers.', 'Rewrite lab 4 steps 3 and 4 to match'],
       ['☐', 'Total Bobcoins used for one person doing everything.', 'Decide if 50 is enough'],
     ],

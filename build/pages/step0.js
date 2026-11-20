@@ -17,10 +17,10 @@ ${stuck('If it does not work', ul(['No email arrives: check spam, then try again
 `,
     },
     {
-      title: 'Install Bob Desktop',
+      title: 'Install Bob Insiders (includes Bob Desktop)',
       mins: 8,
       body: `
-<p>Bob Desktop comes from the Bob Insiders build. Open the Google Drive folder, download the one file for your computer, then open it and follow the installer:</p>
+<p>Lab 4 uses Bob Desktop. You open it from the <b>Desktop</b> button at the top right of the Bob Insiders window, so install Insiders now. Open the Google Drive folder, download the one file for your computer, then open it and follow the installer:</p>
 <p><a class="btn sm dark" href="https://drive.google.com/drive/folders/1k3uoDmz2MG9kWns51NP3wVXkI775edRM?usp=sharing">Open the download folder (Google Drive)</a></p>
 ${table(
     ['Your computer', 'File in the folder', 'Size'],
@@ -33,9 +33,9 @@ ${table(
   )}
 <p>Not sure which Mac you have? Open the Apple menu, then <b>About This Mac</b>. "Chip: Apple M…" means Apple silicon. "Processor: Intel" means Intel.</p>
 <p>On an Apple silicon Mac you can also use the <a href="https://drive.google.com/file/d/1yxg6k8Yo8cn3x5eEEXxpVTkD1mBYyIzg/view?usp=sharing">direct download link</a>.</p>
-<p>Open Bob and sign in with the Gmail you registered in step 1.</p>
+<p>Open Bob Insiders and sign in with the Gmail you registered in step 1. Look at the top right of the window: you should see a <b>Desktop</b> button. You will click it in lab 4.</p>
 ${note('warn', '<p>This is a pre-release "Insiders" build (version <code>2.4.0-insider.1</code>). It can be rougher than the public release. If something behaves oddly, say so in the room before you assume you did it wrong.</p><p>Mac: if macOS says it cannot verify the app, right-click the installer and choose <b>Open</b>. Windows: if SmartScreen blocks it, choose <b>More info</b>, then <b>Run anyway</b>.</p>', 'Before you install')}
-${note('expect', '<p>Bob opens and shows your name or Gmail after you sign in.</p>')}
+${note('expect', '<p>Bob Insiders opens and shows your name or Gmail after you sign in, and a <b>Desktop</b> button sits at the top right of the window.</p>')}
 `,
     },
     {
@@ -43,7 +43,7 @@ ${note('expect', '<p>Bob opens and shows your name or Gmail after you sign in.</
       mins: 5,
       body: `
 <p>Labs 1 and 2 use Bob as an IDE: a code editor with Bob built in. Download it from <a href="https://bob.ibm.com/download">https://bob.ibm.com/download</a> (pick your computer: Mac ARM, Mac Intel, Windows or Linux) and sign in with the same Gmail.</p>
-${note('tip', '<p>Lab 4 uses Bob Desktop. Labs 1 to 3 use the IDE and GitHub. Keep both open on the day.</p>')}
+${note('tip', '<p>Labs 1 and 2 use the IDE. Lab 3 uses GitHub. Lab 4 uses Bob Desktop, opened from the Desktop button in Insiders. Keep the IDE open on the day.</p>')}
 `,
     },
     {

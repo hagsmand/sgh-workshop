@@ -41,11 +41,17 @@ ${steps([
       title: 'Open Bob Desktop and give it the pack',
       mins: 8,
       body: `
-<p>Open <b>Bob Desktop</b> and sign in with your Gmail. Start a new task. Point it at the <code>lab4/monday-pack</code> folder as its working folder. If Desktop asks you to attach files instead, attach all four.</p>
+<ol>
+  <li>Open <b>Bob Insiders</b>. It is the app you installed in step 0.</li>
+  <li>Look at the <b>top right of the window</b> and click the <b>Desktop</b> button. Bob Desktop opens.</li>
+  <li>If Desktop asks you to sign in, use the Gmail you registered in step 0.</li>
+  <li>Start a new task. Point it at the <code>lab4/monday-pack</code> folder as its working folder. If Desktop asks you to attach files instead, attach all four.</li>
+</ol>
+${note('tip', '<p>From here on, work in Bob Desktop, not in the editor you clicked the button in. You can leave the editor open in the background.</p>')}
 <p>Read <code>brief.md</code> yourself. It is short. Then check Bob understood it:</p>
 ${prompt('Read brief.md and the three CSV files. In five bullets, tell me what the meeting needs and what data you have. Do not make anything yet.')}
 ${note('expect', '<p>Bob lists: a deck of 6 to 8 slides, a one-page data report, three files, THB money, and the rule to use only these files.</p>')}
-${stuck('If it does not work', ul(['Bob does not see the folder: use the file picker or drag the four files into the task.', 'Bob asks to run something on your computer: read the request, then approve if it is about these files.', 'Desktop is not signed in or says no Bobcoins: tell the facilitator.']))}
+${stuck('If it does not work', ul(['You cannot find the <b>Desktop</b> button: the button only shows when Bob Desktop is available on your computer. Make sure you installed the Insiders build from the Drive folder in step 0, and fully quit and reopen Insiders. Still missing: tell the facilitator.', 'Bob does not see the folder: use the file picker or drag the four files into the task.', 'Bob asks to run something on your computer: read the request, then approve if it is about these files.', 'Desktop is not signed in or says no Bobcoins: tell the facilitator.']))}
 `,
     },
     {
@@ -134,6 +140,6 @@ ${ul([
 
 ${note('fac', `<p>Answer key for the deck: three-branch total ${F.total.fmt}; riser ${F.topGrow.cat} ${F.topGrow.change}; faller ${F.topFall.cat} ${F.topFall.change}; Khon Kaen ${F.kkn.out.length} sold out, ${F.kkn.low.length} low; reorder ${F.reorder.totalFmt}. Promotion in the data: ${F.promo.from}, ${F.promo.cats} (roughly 10% off, higher volume). Top product by revenue: ${F.topSku.name} (${F.topSku.sku}), ${F.topSku.revenue}.</p>`)}
 `;
-  const sheet = titleBlock({ no: '4', title: 'Bob Desktop', sub: "Make a slide deck and a small data report, then judge the experience.", facts: [["Time", `60 minutes`], ["Where", `Bob Desktop. Not the IDE`], ["You make", `A short slide deck and a one-page data report`], ["Story", `The sales meeting is at noon and there is no deck`]] });
+  const sheet = titleBlock({ no: '4', title: 'Bob Desktop', sub: "Make a slide deck and a small data report, then judge the experience.", facts: [["Time", `60 minutes`], ["Where", `Bob Desktop, opened from the Desktop button in Bob Insiders`], ["You make", `A short slide deck and a one-page data report`], ["Story", `The sales meeting is at noon and there is no deck`]] });
   return { sheet, id: 'lab-4', title: 'Lab 4: Bob Desktop', body };
 }

@@ -416,7 +416,7 @@ a.ext:hover .last::after, a.ext:hover:not(:has(.last))::after { opacity: 1; }
     <div class="side"><a href="facilitator.html">Facilitator guide</a><a href="downloads/ghh-bob-workshop-kit.zip" download>Download the code kit</a></div>
   </nav>
   <main id="main">
-<header class="titleblock"><div class="top"><div class="sheetno" aria-hidden="true">4</div><div><h1>Bob Desktop</h1><p class="sub">Make a slide deck and a small data report, then judge the experience.</p></div></div><dl><div><dt>Time</dt><dd>60 minutes</dd></div><div><dt>Where</dt><dd>Bob Desktop. Not the IDE</dd></div><div><dt>You make</dt><dd>A short slide deck and a one-page data report</dd></div><div><dt>Story</dt><dd>The sales meeting is at noon and there is no deck</dd></div></dl></header>
+<header class="titleblock"><div class="top"><div class="sheetno" aria-hidden="true">4</div><div><h1>Bob Desktop</h1><p class="sub">Make a slide deck and a small data report, then judge the experience.</p></div></div><dl><div><dt>Time</dt><dd>60 minutes</dd></div><div><dt>Where</dt><dd>Bob Desktop, opened from the Desktop button in Bob Insiders</dd></div><div><dt>You make</dt><dd>A short slide deck and a one-page data report</dd></div><div><dt>Story</dt><dd>The sales meeting is at noon and there is no deck</dd></div></dl></header>
 
 <p class="lead">Bob Desktop is for people who do not live in a code editor: managers, analysts, anyone who works with documents and numbers. You are a developer today, so do this lab as one of them. Do not open the code. Ask for results in plain words.</p>
 
@@ -427,11 +427,17 @@ a.ext:hover .last::after, a.ext:hover:not(:has(.last))::after { opacity: 1; }
 <div class="tbl"><table><thead><tr><th>File</th><th>What it has</th></tr></thead><tbody><tr><td><code>brief.md</code></td><td>What the meeting needs, and the rules Bob must follow. <b>Read this first.</b></td></tr><tr><td><code>weekly-sales.csv</code></td><td>Units and revenue by week, branch and category</td></tr><tr><td><code>top-products-30d.csv</code></td><td>Each branch's products ranked by revenue, last 30 days</td></tr><tr><td><code>stock-status.csv</code></td><td>Stock today at each branch</td></tr></tbody></table></div>
 
 <div class="steps"><section class="step" id="step-1"><div class="gutter"><span class="tag">1</span><input type="checkbox" aria-label="Mark step 1 done"></div><div class="inner"><h3>Open Bob Desktop and give it the pack<span class="mins">8 min</span></h3>
-<p>Open <b>Bob Desktop</b> and sign in with your Gmail. Start a new task. Point it at the <code>lab4/monday-pack</code> folder as its working folder. If Desktop asks you to attach files instead, attach all four.</p>
+<ol>
+  <li>Open <b>Bob Insiders</b>. It is the app you installed in step 0.</li>
+  <li>Look at the <b>top right of the window</b> and click the <b>Desktop</b> button. Bob Desktop opens.</li>
+  <li>If Desktop asks you to sign in, use the Gmail you registered in step 0.</li>
+  <li>Start a new task. Point it at the <code>lab4/monday-pack</code> folder as its working folder. If Desktop asks you to attach files instead, attach all four.</li>
+</ol>
+<div class="note tip"><p class="h">Tip</p><p>From here on, work in Bob Desktop, not in the editor you clicked the button in. You can leave the editor open in the background.</p></div>
 <p>Read <code>brief.md</code> yourself. It is short. Then check Bob understood it:</p>
 <div class="prompt" data-copyable><div class="who">Paste into Bob</div><p>Read brief.md and the three CSV files. In five bullets, tell me what the meeting needs and what data you have. Do not make anything yet.</p><button class="copy" type="button">Copy</button></div>
 <div class="note expect"><p class="h">You should see</p><p>Bob lists: a deck of 6 to 8 slides, a one-page data report, three files, THB money, and the rule to use only these files.</p></div>
-<details class="stuck"><summary>If it does not work</summary><div class="in"><ul><li>Bob does not see the folder: use the file picker or drag the four files into the task.</li><li>Bob asks to run something on your computer: read the request, then approve if it is about these files.</li><li>Desktop is not signed in or says no Bobcoins: tell the facilitator.</li></ul></div></details>
+<details class="stuck"><summary>If it does not work</summary><div class="in"><ul><li>You cannot find the <b>Desktop</b> button: the button only shows when Bob Desktop is available on your computer. Make sure you installed the Insiders build from the Drive folder in step 0, and fully quit and reopen Insiders. Still missing: tell the facilitator.</li><li>Bob does not see the folder: use the file picker or drag the four files into the task.</li><li>Bob asks to run something on your computer: read the request, then approve if it is about these files.</li><li>Desktop is not signed in or says no Bobcoins: tell the facilitator.</li></ul></div></details>
 </div></section>
 <section class="step" id="step-2"><div class="gutter"><span class="tag">2</span><input type="checkbox" aria-label="Mark step 2 done"></div><div class="inner"><h3>Explore the data before you make anything<span class="mins">8 min</span></h3>
 <p>Good analysts look first. Ask Bob questions you can check:</p>
