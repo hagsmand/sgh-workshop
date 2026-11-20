@@ -27,12 +27,21 @@ function existsExact(rel) {
 
 const problems = [];
 let checked = 0;
+let external = 0;
 const pages = readdirSync(SITE).filter((f) => f.endsWith('.html'));
 if (pages.length === 0) problems.push('no .html pages in ' + SITE);
 
 for (const page of pages) {
   const html = readFileSync(join(SITE, page), 'utf8');
   const pageUrl = new URL(page, BASE);
+
+  // Every link to another site must open in a new tab and must not hand it window.opener.
+  for (const m of html.matchAll(/<a\s[^>]*?href="(https?:\/\/[^"]*)"[^>]*>/g)) {
+    const tag = m[0];
+    external++;
+    if (!/\starget="_blank"/.test(tag)) problems.push(`${page}: external link "${m[1]}" does not open in a new tab`);
+    else if (!/\srel="[^"]*noopener[^"]*"/.test(tag)) problems.push(`${page}: external link "${m[1]}" opens a new tab without rel="noopener"`);
+  }
   const refs = [
     ...[...html.matchAll(/\s(?:href|src)="([^"]*)"/g)].map((m) => m[1]),
     ...[...html.matchAll(/url\(\s*["']?([^"')]+)["']?\s*\)/g)].map((m) => m[1]),
@@ -56,4 +65,4 @@ if (problems.length) {
   console.error('Site check failed:\n' + problems.map((p) => '  - ' + p).join('\n'));
   process.exit(1);
 }
-console.log(`Site check passed: ${pages.length} pages, ${checked} internal links and assets, under a repo path, case-sensitive`);
+console.log(`Site check passed: ${pages.length} pages, ${checked} internal links and assets, ${external} external links open in a new tab`);

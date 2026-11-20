@@ -375,6 +375,18 @@ a.sheet:hover .big, .sheet.hl .big { color: var(--cut); -webkit-text-stroke-colo
 .score label { display: inline-flex; align-items: center; gap: 4px; margin-right: 10px; cursor: pointer; font-size: .92rem; padding: 4px 2px; }
 .score input { accent-color: var(--cut); width: 18px; height: 18px; }
 
+/* ================= links that open a new tab ================= */
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+a.ext .last { white-space: nowrap; }
+a.ext .last::after, a.ext:not(:has(.last))::after {
+  content: ""; display: inline-block; width: .78em; height: .78em; margin-left: .3em; vertical-align: -.04em; opacity: .75;
+  background-color: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6.5 3H3v10h10V9.5M9.5 2.5h4v4M13.5 2.5L7.5 8.5'/%3E%3C/svg%3E") center / contain no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6.5 3H3v10h10V9.5M9.5 2.5h4v4M13.5 2.5L7.5 8.5'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+a.ext:hover .last::after, a.ext:hover:not(:has(.last))::after { opacity: 1; }
+@media print { a.ext .last::after, a.ext:not(:has(.last))::after { display: none; } }
+
 /* ================= print ================= */
 @media print {
   .bar, .rail, .pager, .copy, .step .gutter input, .hero::before { display: none !important; }
@@ -418,7 +430,7 @@ a.sheet:hover .big, .sheet.hl .big { color: var(--cut); -webkit-text-stroke-colo
 
 <div class="steps"><section class="step" id="step-1"><div class="gutter"><span class="tag">1</span><input type="checkbox" aria-label="Mark step 1 done"></div><div class="inner"><h3>Create a repository and upload the app<span class="mins">8 min</span></h3>
 <ol>
-  <li>Go to <a href="https://github.com/new">github.com/new</a>. Name it <code>ghh-stock-dashboard</code>. Choose <b>Private</b>. Click <b>Create repository</b>.</li>
+  <li>Go to <a href="https://github.com/new" class="ext" target="_blank" rel="noopener noreferrer"><span class="last">github.com/new<span class="sr-only"> (opens in a new tab)</span></span></a>. Name it <code>ghh-stock-dashboard</code>. Choose <b>Private</b>. Click <b>Create repository</b>.</li>
   <li>On the new repository page, click <b>uploading an existing file</b>.</li>
   <li>On your laptop, open the kit folder, then <code>lab3/repo</code>. Select <b>everything inside</b> it (<code>data</code>, <code>public</code>, <code>src</code>, <code>test</code>, <code>package.json</code>) and drag it onto the GitHub page. Do not drag the <code>repo</code> folder itself, and do not upload <code>node_modules</code> if you see one.</li>
   <li>Wait for the file list to finish. Click <b>Commit changes</b>.</li>
@@ -430,7 +442,7 @@ a.sheet:hover .big, .sheet.hl .big { color: var(--cut); -webkit-text-stroke-colo
 <section class="step" id="step-2"><div class="gutter"><span class="tag">2</span><input type="checkbox" aria-label="Mark step 2 done"></div><div class="inner"><h3>Create a Bob API key and store it as a secret<span class="mins">6 min</span></h3>
 <p>The Action cannot sign in through a browser. It uses an <b>API key</b>.</p>
 <ol>
-  <li>Go to <a href="https://bob.ibm.com">bob.ibm.com</a>, sign in, open your subscription, and go to <b>API keys</b>.</li>
+  <li>Go to <a href="https://bob.ibm.com" class="ext" target="_blank" rel="noopener noreferrer"><span class="last">bob.ibm.com<span class="sr-only"> (opens in a new tab)</span></span></a>, sign in, open your subscription, and go to <b>API keys</b>.</li>
   <li>Create a key. Set the type to <b>Inference</b>. Name it <code>github-actions-review</code>.</li>
   <li><b>Copy the key now.</b> You cannot see it again.</li>
   <li>In your GitHub repository go to <b>Settings</b>, then <b>Secrets and variables</b>, then <b>Actions</b>, then <b>New repository secret</b>.</li>

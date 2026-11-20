@@ -21,7 +21,23 @@ const PAGES = [{ id: 'home', file: 'index.html', title: 'Smart Branch in a Day' 
 // Brand mark: a floor-plan corner with a redline dimension tick.
 const MARK = `<svg viewBox="0 0 32 32" width="30" height="30" aria-hidden="true"><rect x="1.5" y="1.5" width="29" height="29" rx="7" fill="#0b2a4a"/><path d="M7 25V9.5h8.5M7 17h12M19 25V13.5h6" fill="none" stroke="#8fb8e8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="25" cy="8" r="3" fill="#ff7a63"/></svg>`;
 
-export function layout({ id, title, body, hero, sheet }) {
+
+// Links to other sites open in a new tab, so people keep their place in the workshop.
+// Done at build time: it works without JavaScript and covers every page, including future ones.
+// rel="noopener noreferrer" stops the new tab from controlling this one.
+export function markExternalLinks(html) {
+  return html.replace(/<a\s([^>]*?)>([\s\S]*?)<\/a>/g, (whole, attrs, inner) => {
+    const href = /\shref="(https?:\/\/[^"]*)"|^href="(https?:\/\/[^"]*)"/.exec(' ' + attrs);
+    if (!href || /\btarget=/.test(attrs)) return whole;
+    const cls = /\bclass="([^"]*)"/.exec(attrs);
+    const a = cls ? attrs.replace(cls[0], `class="${cls[1]} ext"`) : `${attrs} class="ext"`;
+    // Keep the icon on the same line as the last word: wrap the final word and the hint in a nowrap span.
+    const glued = inner.replace(/(\S+)$/, '<span class="last">$1<span class="sr-only"> (opens in a new tab)</span></span>');
+    return `<a ${a} target="_blank" rel="noopener noreferrer">${glued === inner ? inner + '<span class="sr-only"> (opens in a new tab)</span>' : glued}</a>`;
+  });
+}
+
+function render({ id, title, body, hero, sheet }) {
   const i = PAGES.findIndex((p) => p.id === id);
   const prev = i > 0 ? PAGES[i - 1] : null;
   const next = i >= 0 && i < PAGES.length - 1 ? PAGES[i + 1] : null;
@@ -92,6 +108,8 @@ ${pager}
 </div>
 ${tail}`;
 }
+
+export const layout = (page) => markExternalLinks(render(page));
 
 // The title block at the top of each lab: sheet number, title, and a small spec table.
 export function titleBlock({ no, title, sub, facts }) {
