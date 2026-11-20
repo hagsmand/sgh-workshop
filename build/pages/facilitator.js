@@ -26,7 +26,7 @@ ${table(
     [
       ['Cannot create an API key on a trial account', 'The Bob docs say API keys are available for trial users. Nobody has tested it for this workshop.', '<b>Test it first.</b> If it fails, create one key on a paid or admin account, share it only in the room, and revoke it that evening. Do not post it in chat history that stays.'],
       ['Bobcoins run out', 'The trial has 50 per person. Lab 3 spends about 3 reviews. Labs 1, 2 and 4 spend more, and their cost is not known.', 'Dry-run all labs and watch the balance. Tell people which labs are heavy. Ask for a second trial on another Gmail only as a last resort.'],
-      ['Bob Desktop installer', 'The Drive link is a Mac installer for Apple silicon, build <code>1.126.0+bob2.4.0-insider.1</code>. It is a pre-release.', 'Ask Windows and Intel Mac users now. Have a shared computer ready for lab 4.'],
+      ['Bob Desktop installer', 'The Drive folder holds an Insiders pre-release build, <code>1.126.0+bob2.4.0-insider.1</code>, for Mac (Apple silicon and Intel), Windows and Linux. A pre-release can change or break between now and the day.', 'Download the right file for every laptop in the room before the day. Keep copies on a USB drive. Re-check the folder the week before: the file names or versions may change.'],
       ['Corporate network blocks npm or GitHub Actions', 'Labs need <code>registry.npmjs.org</code>, GitHub, and <code>bob.ibm.com</code>.', 'Test on the venue network. Have a phone hotspot.'],
       ['Bob output differs between people', 'Models vary. Every review is different.', 'The pages say what to expect in general ("finds most of these"), never exact text. Say it out loud.'],
       ['Browser says "Access to the file was denied"', 'macOS protects Documents, Desktop and Downloads. A browser without permission for that folder cannot open pages from it, even though the files are fine.', 'Serve the pages instead: <code>node build/serve.js</code>, then open <code>http://localhost:4173</code>. Or move the folder out of Documents, or allow the browser under System Settings, Privacy &amp; Security, Files and Folders.'],
@@ -40,7 +40,7 @@ ${table(
     ['', 'Check', 'If it fails'],
     [
       ['☐', 'Register at bob.ibm.com/trial with a Gmail account. Note the Bobcoins you start with.', 'Change step 1'],
-      ['☐', 'Install Bob Desktop from the Drive link. Sign in.', 'Change step 2, find a Windows build'],
+      ['☐', 'Install Bob Desktop from the Drive folder on each kind of laptop in the room (Apple silicon, Intel, Windows). Sign in.', 'Change step 2, or share a different build'],
       ['☐', 'Create an <b>Inference</b> API key on the trial account.', 'Lab 3 needs the plan above'],
       ['☐', 'Lab 1 step 3: the skill shows in settings. Step 5: the mode shows in the picker. Step 6: the MCP server shows as connected with 4 tools.', 'Fix the wording of the step. Settings screens may use other names'],
       ['☐', 'Lab 1 step 7: Bob lists exactly the sold-out and low items shown on the page.', 'Check <code>.bob/mcp.json</code> paths'],

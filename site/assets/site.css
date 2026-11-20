@@ -198,6 +198,7 @@ th, td { text-align: left; padding: 11px 16px; border-bottom: 1px solid var(--li
 tr:last-child td { border-bottom: 0; }
 th { font: 600 .88rem/1.25 var(--body); color: var(--ink); background: var(--paper-2); white-space: nowrap; border-bottom: 1px solid var(--line-2); }
 tbody tr:hover td { background: rgba(11,42,74,.035); }
+td code { white-space: nowrap; }
 td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
 
 /* ================= home: hero ================= */

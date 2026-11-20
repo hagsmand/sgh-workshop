@@ -207,6 +207,7 @@ th, td { text-align: left; padding: 11px 16px; border-bottom: 1px solid var(--li
 tr:last-child td { border-bottom: 0; }
 th { font: 600 .88rem/1.25 var(--body); color: var(--ink); background: var(--paper-2); white-space: nowrap; border-bottom: 1px solid var(--line-2); }
 tbody tr:hover td { background: rgba(11,42,74,.035); }
+td code { white-space: nowrap; }
 td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
 
 /* ================= home: hero ================= */
@@ -414,14 +415,17 @@ a.sheet:hover .big, .sheet.hl .big { color: var(--cut); -webkit-text-stroke-colo
 <details class="stuck"><summary>If it does not work</summary><div class="in"><ul><li>No email arrives: check spam, then try again with the same address.</li><li>The page asks for an IBMid: use "Create an IBMid" with your Gmail.</li><li>Still blocked: tell the facilitator before the day.</li></ul></div></details>
 </div></section>
 <section class="step" id="step-2"><div class="gutter"><span class="tag">2</span><input type="checkbox" aria-label="Mark step 2 done"></div><div class="inner"><h3>Install Bob Desktop<span class="mins">8 min</span></h3>
-<p>Download Bob Desktop from this link, then open the file and follow the installer:</p>
-<p><a href="https://drive.google.com/file/d/1yxg6k8Yo8cn3x5eEEXxpVTkD1mBYyIzg/view?usp=sharing">Bob Desktop installer (Google Drive)</a></p>
+<p>Bob Desktop comes from the Bob Insiders build. Open the Google Drive folder, download the one file for your computer, then open it and follow the installer:</p>
+<p><a class="btn sm dark" href="https://drive.google.com/drive/folders/1k3uoDmz2MG9kWns51NP3wVXkI775edRM?usp=sharing">Open the download folder (Google Drive)</a></p>
+<div class="tbl"><table><thead><tr><th>Your computer</th><th>File in the folder</th><th>Size</th></tr></thead><tbody><tr><td>Mac with Apple silicon (M1 or newer)</td><td><code>mac-arm64.pkg</code></td><td>about 270 MB</td></tr><tr><td>Mac with an Intel chip</td><td><code>mac-intel.pkg</code></td><td>about 280 MB</td></tr><tr><td>Windows, 64-bit</td><td><code>windows-x64.exe</code></td><td>about 240 MB</td></tr><tr><td>Linux, Debian or Ubuntu</td><td><code>linux-amd64.deb</code></td><td>about 230 MB</td></tr></tbody></table></div>
+<p>Not sure which Mac you have? Open the Apple menu, then <b>About This Mac</b>. "Chip: Apple M…" means Apple silicon. "Processor: Intel" means Intel.</p>
+<p>On an Apple silicon Mac you can also use the <a href="https://drive.google.com/file/d/1yxg6k8Yo8cn3x5eEEXxpVTkD1mBYyIzg/view?usp=sharing">direct download link</a>.</p>
 <p>Open Bob and sign in with the Gmail you registered in step 1.</p>
-<div class="note warn"><p class="h">Careful</p><p>The file in that link is a Mac installer for Apple silicon (<code>IBM-Bob-darwin-arm64-…pkg</code>). If you use Windows or an Intel Mac, tell the facilitator before the day.</p><p>If macOS says it cannot verify the app, right-click the installer and choose <b>Open</b>.</p></div>
+<div class="note warn"><p class="h">Before you install</p><p>This is a pre-release "Insiders" build (version <code>2.4.0-insider.1</code>). It can be rougher than the public release. If something behaves oddly, say so in the room before you assume you did it wrong.</p><p>Mac: if macOS says it cannot verify the app, right-click the installer and choose <b>Open</b>. Windows: if SmartScreen blocks it, choose <b>More info</b>, then <b>Run anyway</b>.</p></div>
 <div class="note expect"><p class="h">You should see</p><p>Bob opens and shows your name or Gmail after you sign in.</p></div>
 </div></section>
 <section class="step" id="step-3"><div class="gutter"><span class="tag">3</span><input type="checkbox" aria-label="Mark step 3 done"></div><div class="inner"><h3>Install the Bob IDE<span class="mins">5 min</span></h3>
-<p>Labs 1 and 2 use Bob as an IDE: a code editor with Bob built in. Download it from <a href="https://bob.ibm.com/download">https://bob.ibm.com/download</a> (pick your computer: Mac ARM, Mac Intel or Windows) and sign in with the same Gmail.</p>
+<p>Labs 1 and 2 use Bob as an IDE: a code editor with Bob built in. Download it from <a href="https://bob.ibm.com/download">https://bob.ibm.com/download</a> (pick your computer: Mac ARM, Mac Intel, Windows or Linux) and sign in with the same Gmail.</p>
 <div class="note tip"><p class="h">Tip</p><p>Lab 4 uses Bob Desktop. Labs 1 to 3 use the IDE and GitHub. Keep both open on the day.</p></div>
 </div></section>
 <section class="step" id="step-4"><div class="gutter"><span class="tag">4</span><input type="checkbox" aria-label="Mark step 4 done"></div><div class="inner"><h3>Install Node.js 24<span class="mins">4 min</span></h3>
