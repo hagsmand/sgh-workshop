@@ -1,0 +1,25 @@
+{
+  "name": "ghh-bob-workshop-kit",
+  "version": "1.0.0",
+  "description": "Code kit for the Siam Global House x IBM Bob workshop (Smart Branch in a Day)",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "setup": "node scripts/seed.js && node scripts/sync.js && node scripts/monday-pack.js && node scripts/check-data.js",
+    "seed": "node scripts/seed.js",
+    "sync": "node scripts/sync.js",
+    "check": "node scripts/check-data.js",
+    "mcp": "node lab1/mcp/inventory-server.js",
+    "mcp:config": "node scripts/print-mcp-config.js",
+    "app": "node lab2/solution/src/server.js",
+    "test": "node --test \"tests/*.test.js\" \"lab3/pr-samples/good/test/*.test.js\""
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "express": "^5.3.0",
+    "zod": "^4.6.7"
+  }
+}

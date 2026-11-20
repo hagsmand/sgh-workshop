@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#0b2a4a">
+<title>Lab 1: Understand Bob's capability · Smart Branch in a Day</title>
+<style>
+/* Smart Branch in a Day: a drafting set.
+   Ink-navy sheets and code on cool drafting vellum. One accent: the redline. */
+
+@font-face { font-family: "Bricolage Grotesque"; font-weight: 400 800; font-stretch: 75% 100%; font-display: swap; src: url("assets/fonts/bricolage-var.woff2") format("woff2"); }
+@font-face { font-family: "IBM Plex Sans Thai"; font-weight: 400; font-display: swap; src: url("assets/fonts/plexthai-latin-400.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "IBM Plex Sans Thai"; font-weight: 400; font-display: swap; src: url("assets/fonts/plexthai-thai-400.woff2") format("woff2"); unicode-range: U+02D7, U+0303, U+0331, U+0E01-0E5B, U+200C-200D, U+25CC; }
+@font-face { font-family: "IBM Plex Sans Thai"; font-weight: 500; font-display: swap; src: url("assets/fonts/plexthai-latin-500.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "IBM Plex Sans Thai"; font-weight: 500; font-display: swap; src: url("assets/fonts/plexthai-thai-500.woff2") format("woff2"); unicode-range: U+02D7, U+0303, U+0331, U+0E01-0E5B, U+200C-200D, U+25CC; }
+@font-face { font-family: "IBM Plex Sans Thai"; font-weight: 600; font-display: swap; src: url("assets/fonts/plexthai-latin-600.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "IBM Plex Sans Thai"; font-weight: 600; font-display: swap; src: url("assets/fonts/plexthai-thai-600.woff2") format("woff2"); unicode-range: U+02D7, U+0303, U+0331, U+0E01-0E5B, U+200C-200D, U+25CC; }
+@font-face { font-family: "IBM Plex Sans Thai"; font-weight: 700; font-display: swap; src: url("assets/fonts/plexthai-latin-700.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "IBM Plex Sans Thai"; font-weight: 700; font-display: swap; src: url("assets/fonts/plexthai-thai-700.woff2") format("woff2"); unicode-range: U+02D7, U+0303, U+0331, U+0E01-0E5B, U+200C-200D, U+25CC; }
+@font-face { font-family: "IBM Plex Mono"; font-weight: 400; font-display: swap; src: url("assets/fonts/plexmono-400.woff2") format("woff2"); }
+@font-face { font-family: "IBM Plex Mono"; font-weight: 500; font-display: swap; src: url("assets/fonts/plexmono-500.woff2") format("woff2"); }
+
+:root {
+  --paper: #eceff2;
+  --paper-2: #e1e7ec;
+  --card: #f8fafb;
+  --ink: #0b2a4a;
+  --ink-2: #133b63;
+  --ink-3: #1c4d7e;
+  --text: #14202c;
+  --muted: #55616d;
+  --line: #cfd6dd;
+  --line-2: #b6c1cb;
+  --cut: #bf2f1a;         /* the redline: the only accent on paper */
+  --cut-hi: #ff7a63;      /* the same redline, lifted for dark backgrounds */
+  --blue-line: #8fb8e8;   /* drafting line on ink */
+  --ok: #1b7a4b;
+  --display: "Bricolage Grotesque", "IBM Plex Sans Thai", system-ui, sans-serif;
+  --body: "IBM Plex Sans Thai", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --lift: 0 1px 0 rgba(11,42,74,.05), 0 10px 26px -14px rgba(11,42,74,.28);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0; color: var(--text); font: 400 17px/1.7 var(--body); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+  background-color: var(--paper);
+  background-image: linear-gradient(rgba(11,42,74,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(11,42,74,.05) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+a { color: var(--ink-3); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { color: var(--cut); }
+:focus-visible { outline: 3px solid var(--cut); outline-offset: 3px; border-radius: 3px; }
+.hero :focus-visible, .titleblock :focus-visible, .code :focus-visible, .story :focus-visible { outline-color: #ffd2c9; }
+::selection { background: #ffd9d1; color: #000; }
+code, pre, kbd { font-family: var(--mono); }
+p code, li code, td code, summary code, h3 code, dd code {
+  background: rgba(11,42,74,.07); color: var(--ink); padding: .1em .38em; border-radius: 5px; font-size: .86em; overflow-wrap: anywhere; font-weight: 500;
+}
+kbd { background: var(--card); border: 1px solid var(--line-2); border-bottom-width: 2px; border-radius: 5px; padding: 0 .42em; font-size: .84em; color: var(--ink); }
+b, strong { font-weight: 600; }
+
+.skip { position: absolute; left: -999px; top: 10px; background: var(--ink); color: #fff; padding: 10px 16px; border-radius: 6px; z-index: 50; }
+.skip:focus { left: 10px; }
+
+/* ================= top bar ================= */
+.bar { position: sticky; top: 0; z-index: 30; background: rgba(236,239,242,.88); backdrop-filter: saturate(1.4) blur(10px); -webkit-backdrop-filter: saturate(1.4) blur(10px); border-bottom: 1px solid var(--line-2); }
+.bar-in { max-width: 1280px; margin: 0 auto; padding: 10px 28px; display: flex; align-items: center; gap: 22px; }
+.brand { display: flex; align-items: center; gap: 12px; color: var(--ink); text-decoration: none; font: 700 1.2rem/1 var(--display); font-stretch: 85%; letter-spacing: -.01em; }
+.brand:hover { color: var(--ink); }
+.brand svg { width: 30px; height: 30px; flex: none; }
+.bar .meta { color: var(--muted); font-size: .86rem; }
+.progress-wrap { margin-left: auto; display: flex; align-items: center; gap: 12px; font: 600 .86rem/1 var(--body); color: var(--ink); }
+.progress-wrap[hidden] { display: none; }
+.meter { width: 120px; height: 6px; background: rgba(11,42,74,.16); border-radius: 99px; overflow: hidden; }
+.meter i { display: block; height: 100%; width: 0; background: var(--cut); border-radius: 99px; transition: width .4s cubic-bezier(.2,.7,.2,1); }
+@media (prefers-reduced-motion: reduce) { .meter i { transition: none; } }
+
+/* ================= layout ================= */
+.floor { max-width: 1280px; margin: 0 auto; padding: 40px 28px 96px; display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 56px; align-items: start; }
+main { min-width: 0; }
+
+/* ---------- sheet index (left rail): a route line ---------- */
+.rail { position: sticky; top: 84px; font-size: .92rem; }
+.rail h2 { font: 600 .92rem/1 var(--body); color: var(--muted); margin: 0 0 14px; }
+.rail ol { list-style: none; margin: 0; padding: 0; position: relative; }
+.rail ol::before { content: ""; position: absolute; left: 21px; top: 22px; bottom: 22px; width: 2px; background: repeating-linear-gradient(var(--line-2) 0 4px, transparent 4px 8px); }
+.rail li { position: relative; margin: 0 0 4px; }
+.rail li a, .rail li .gap { display: grid; grid-template-columns: 44px 1fr; gap: 12px; align-items: center; padding: 6px 10px 6px 0; border-radius: 12px; text-decoration: none; color: var(--text); }
+.rail li a:hover { background: rgba(11,42,74,.07); color: var(--text); }
+.rail .no { position: relative; z-index: 1; width: 44px; height: 44px; display: grid; place-items: center; background: var(--card); border: 2px solid var(--ink); border-radius: 50%; font: 700 1.2rem/1 var(--display); color: var(--ink); }
+.rail .t { font-weight: 600; line-height: 1.25; }
+.rail .m { display: block; font-weight: 400; color: var(--muted); font-size: .8rem; margin-top: 2px; }
+.rail a[aria-current="page"], .rail a[aria-current="page"]:hover { background: var(--ink); color: #fff; }
+.rail a[aria-current="page"] .no { background: var(--cut); border-color: var(--cut); color: #fff; }
+.rail a[aria-current="page"] .m { color: #b7cbe3; }
+.rail .gap { color: var(--muted); }
+.rail .gap .no { border: 2px dashed var(--line-2); background: var(--paper); color: var(--muted); font-size: 1.1rem; }
+.rail .side { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line-2); display: grid; gap: 6px; }
+.rail .side a { color: var(--ink-3); font-size: .88rem; }
+
+/* ================= sheet title block (lab header) ================= */
+.titleblock { margin: 0 0 40px; background: var(--ink); color: #eaf1fa; border-radius: 6px 22px 6px 22px; overflow: hidden; position: relative; isolation: isolate; box-shadow: var(--lift); }
+.titleblock::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(rgba(143,184,232,.11) 1px, transparent 1px) 0 0 / 24px 24px, linear-gradient(90deg, rgba(143,184,232,.11) 1px, transparent 1px) 0 0 / 24px 24px; -webkit-mask-image: linear-gradient(115deg, #000 0%, transparent 78%); mask-image: linear-gradient(115deg, #000 0%, transparent 78%); }
+.titleblock .top { padding: 34px 38px 28px; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 30px; align-items: end; }
+.titleblock .sheetno { font: 800 clamp(5.5rem, 12vw, 9rem)/.76 var(--display); font-stretch: 75%; color: transparent; -webkit-text-stroke: 2px var(--blue-line); letter-spacing: -.02em; }
+.titleblock h1 { text-wrap: balance; margin: 0; font: 700 clamp(2rem, 4.4vw, 3.3rem)/1.02 var(--display); font-stretch: 88%; letter-spacing: -.02em; color: #fff; }
+.titleblock .sub { margin: 12px 0 0; color: #b7cbe3; max-width: 54ch; font-size: 1.06rem; line-height: 1.5; }
+.titleblock dl { margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); border-top: 1px solid rgba(143,184,232,.35); }
+.titleblock dl > div { padding: 14px 22px 17px 38px; border-left: 1px solid rgba(143,184,232,.35); }
+.titleblock dl > div:first-child { border-left: 0; }
+.titleblock dt { font: 500 .82rem/1 var(--body); color: #8fb0d4; margin-bottom: 7px; }
+.titleblock dd { margin: 0; font: 600 .98rem/1.38 var(--body); color: #fff; }
+.titleblock dd code { background: rgba(255,255,255,.12); color: #fff; }
+
+.lead { font-size: 1.28rem; line-height: 1.6; max-width: 62ch; margin: 0 0 32px; color: var(--text); }
+.lead b { color: var(--ink); }
+
+/* ================= content ================= */
+main h1 { font: 700 clamp(2.4rem, 5vw, 3.6rem)/1.02 var(--display); font-stretch: 88%; letter-spacing: -.02em; color: var(--ink); margin: 0 0 8px; }
+main h2 { text-wrap: balance; font: 700 clamp(1.7rem, 3vw, 2.2rem)/1.1 var(--display); font-stretch: 90%; letter-spacing: -.015em; color: var(--ink); margin: 64px 0 16px; scroll-margin-top: 88px; }
+main h3 { font: 600 1.32rem/1.25 var(--display); color: var(--ink); margin: 0 0 8px; }
+main p { margin: 0 0 15px; max-width: 70ch; }
+main ul, main ol { max-width: 70ch; padding-left: 1.3em; margin: 0 0 18px; }
+main li { margin-bottom: 7px; }
+main li::marker { color: var(--cut); font-weight: 600; }
+hr { border: 0; height: 1px; margin: 52px 0; background: var(--line-2); }
+
+/* ================= steps ================= */
+.steps { display: grid; gap: 22px; margin: 0 0 24px; }
+.step { background: var(--card); border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--lift); display: grid; grid-template-columns: 76px minmax(0, 1fr); overflow: hidden; transition: border-color .25s; }
+.step .gutter { background: var(--paper-2); border-right: 1px solid var(--line); display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 18px 0; position: relative; }
+.step .gutter::after { content: ""; position: absolute; top: 84px; bottom: 56px; width: 1px; background: repeating-linear-gradient(var(--line-2) 0 3px, transparent 3px 7px); }
+.step .tag { font: 800 2.2rem/1 var(--display); font-stretch: 78%; color: var(--ink); letter-spacing: -.02em; }
+.step .gutter input { appearance: none; -webkit-appearance: none; width: 26px; height: 26px; border: 2px solid var(--ink); border-radius: 50%; background: var(--card); cursor: pointer; display: grid; place-items: center; margin: 0; position: relative; z-index: 1; transition: background .2s, border-color .2s; }
+.step .gutter input:hover { border-color: var(--cut); }
+.step .gutter input::after { content: ""; width: 7px; height: 12px; border: solid #fff; border-width: 0 2.5px 2.5px 0; transform: rotate(45deg) scale(0); margin-top: -2px; transition: transform .2s cubic-bezier(.3,1.6,.5,1); }
+.step .gutter input:checked { background: var(--ok); border-color: var(--ok); }
+.step .gutter input:checked::after { transform: rotate(45deg) scale(1); }
+.step .inner { padding: 22px 30px 12px; min-width: 0; transition: opacity .25s; }
+.step h3 { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; font-size: 1.48rem; margin-bottom: 12px; }
+.step h3 .mins { font: 600 .8rem/1 var(--body); color: #8c2412; background: rgba(191,47,26,.1); padding: 6px 10px; border-radius: 99px; }
+.step.done { border-color: #a9d3bb; }
+.step.done .inner { opacity: .6; }
+.step.done .tag { color: var(--ok); }
+@media (prefers-reduced-motion: reduce) { .step, .step .inner, .step .gutter input, .step .gutter input::after { transition: none; } }
+
+/* ================= code ================= */
+.code { margin: 16px 0 22px; border-radius: 12px; overflow: hidden; background: var(--ink); box-shadow: 0 14px 30px -16px rgba(11,42,74,.6); max-width: 100%; position: relative; }
+.code .cap { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 9px 10px 9px 18px; background: var(--ink-2); border-bottom: 1px solid rgba(143,184,232,.2); font: 500 .78rem/1.2 var(--mono); color: #b7cbe3; }
+.code .cap .name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.code pre { margin: 0; padding: 16px 0; overflow-x: auto; color: #dbe7f5; font-size: .84rem; line-height: 1.68; tab-size: 2; counter-reset: ln; }
+.code pre code { display: block; width: max-content; min-width: 100%; font-family: var(--mono); }
+.code .l { display: block; padding: 0 22px 0 0; counter-increment: ln; }
+.code .l::before { content: counter(ln); display: inline-block; width: 3.5em; padding-right: 1.3em; text-align: right; color: #6a89ae; user-select: none; -webkit-user-select: none; }
+.code.short .l::before { display: none; }
+.code.short .l { padding-left: 20px; }
+.code.short pre { padding: 14px 0; }
+.code.nocap .copy { position: absolute; top: 8px; right: 8px; z-index: 2; }
+.code.nocap.short pre { padding-right: 70px; }
+.copy { font: 600 .76rem/1 var(--body); background: rgba(255,255,255,.1); color: #e6eef8; border: 1px solid rgba(143,184,232,.4); border-radius: 7px; padding: 7px 12px; cursor: pointer; transition: background .15s, color .15s; flex: none; }
+.copy:hover { background: #fff; color: var(--ink); }
+.copy.ok { background: var(--ok); border-color: var(--ok); color: #fff; }
+.tk-k { color: #ff9d8c; } .tk-s { color: #a8e0b5; } .tk-n { color: #f2cf86; } .tk-c { color: #86a2c4; font-style: italic; }
+.tk-fn { color: #8ec5ff; } .tk-key { color: #8ec5ff; } .tk-p { color: #92abc9; } .tk-x { color: #f2cf86; } .tk-t { color: #dbe7f5; }
+
+/* ---------- prompts: what to say to Bob ---------- */
+.prompt { margin: 18px 0 24px; background: #fff; border: 1px solid var(--line-2); border-left: 5px solid var(--cut); border-radius: 3px 14px 14px 3px; padding: 14px 18px 16px; max-width: 70ch; position: relative; box-shadow: 0 8px 20px -14px rgba(11,42,74,.4); }
+.prompt .who { font: 600 .84rem/1 var(--body); color: var(--cut); margin: 0 90px 9px 0; }
+.prompt p { margin: 0; white-space: pre-wrap; font-size: .98rem; line-height: 1.62; max-width: none; color: var(--text); }
+.prompt .copy { position: absolute; top: 10px; right: 10px; background: var(--ink); color: #fff; border-color: var(--ink); }
+.prompt .copy:hover { background: var(--cut); border-color: var(--cut); color: #fff; }
+.prompt .copy.ok { background: var(--ok); border-color: var(--ok); }
+
+/* ---------- notes ---------- */
+.note { margin: 18px 0 22px; padding: 14px 18px 14px 58px; border-radius: 10px; background: var(--card); border: 1px solid var(--line); position: relative; max-width: 70ch; }
+.note::before { content: ""; position: absolute; left: 17px; top: 15px; width: 28px; height: 28px; border-radius: 50%; background-position: center; background-repeat: no-repeat; background-size: 15px; }
+.note > :last-child { margin-bottom: 0; }
+.note .h { font: 700 1rem/1.2 var(--display); margin: 5px 0 6px; }
+.note p { max-width: none; }
+.note.tip { background: #e9f1fa; border-color: #c4d7ec; } .note.tip .h { color: var(--ink-3); }
+.note.tip::before { background-color: var(--ink-3); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='white' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M8 7v5M8 4.2v.1'/%3E%3C/svg%3E"); }
+.note.warn { background: #fbeeea; border-color: #eec1b6; } .note.warn .h { color: var(--cut); }
+.note.warn::before { background-color: var(--cut); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='white' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M8 3.5v5.5M8 12v.1'/%3E%3C/svg%3E"); }
+.note.expect { background: #e8f4ed; border-color: #b6d8c4; } .note.expect .h { color: var(--ok); }
+.note.expect::before { background-color: var(--ok); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.5 8.5l3 3 6-7'/%3E%3C/svg%3E"); }
+.note.fac { background: transparent; border: 1.5px dashed var(--line-2); } .note.fac .h { color: var(--muted); }
+.note.fac::before { background-color: var(--muted); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='white' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='8' cy='5.5' r='2'/%3E%3Cpath d='M3.5 13c.4-2.4 2.2-3.6 4.5-3.6s4.1 1.2 4.5 3.6'/%3E%3C/svg%3E"); }
+
+details.stuck { margin: 18px 0 22px; max-width: 70ch; border: 1px solid var(--line-2); border-radius: 10px; }
+details.stuck summary { cursor: pointer; padding: 12px 18px 12px 48px; font: 600 .95rem/1.3 var(--body); color: var(--ink); list-style: none; position: relative; border-radius: 10px; }
+details.stuck summary::-webkit-details-marker { display: none; }
+details.stuck summary::before { content: "+"; position: absolute; left: 16px; top: 50%; transform: translateY(-50%); width: 22px; height: 22px; display: grid; place-items: center; border-radius: 50%; border: 1.5px solid var(--ink-3); color: var(--ink-3); font: 500 1rem/1 var(--mono); }
+details.stuck[open] summary::before { content: "–"; background: var(--ink); border-color: var(--ink); color: #fff; }
+details.stuck summary:hover { background: rgba(11,42,74,.06); }
+details.stuck[open] summary { border-bottom: 1px dashed var(--line-2); border-radius: 10px 10px 0 0; }
+details.stuck .in { padding: 14px 20px 6px; }
+
+/* ================= tables ================= */
+.tbl { overflow-x: auto; margin: 16px 0 24px; max-width: 100%; border: 1px solid var(--line-2); border-radius: 10px; background: var(--card); }
+table { border-collapse: collapse; font-size: .93rem; width: 100%; }
+th, td { text-align: left; padding: 11px 16px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+th { font: 600 .88rem/1.25 var(--body); color: var(--ink); background: var(--paper-2); white-space: nowrap; border-bottom: 1px solid var(--line-2); }
+tbody tr:hover td { background: rgba(11,42,74,.035); }
+td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* ================= home: hero ================= */
+.hero { background: var(--ink); color: #eaf1fa; position: relative; isolation: isolate; overflow: hidden; }
+.hero::before { content: ""; position: absolute; inset: 0; z-index: -2; background:
+  linear-gradient(rgba(143,184,232,.08) 1px, transparent 1px) 0 0 / 28px 28px, linear-gradient(90deg, rgba(143,184,232,.08) 1px, transparent 1px) 0 0 / 28px 28px,
+  linear-gradient(rgba(143,184,232,.11) 1px, transparent 1px) 0 0 / 140px 140px, linear-gradient(90deg, rgba(143,184,232,.11) 1px, transparent 1px) 0 0 / 140px 140px; }
+.hero-in { max-width: 1280px; margin: 0 auto; padding: 60px 28px 52px; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 40px; align-items: center; }
+.hero h1 { text-wrap: balance; font: 700 clamp(3.2rem, 6.4vw, 5.6rem)/.92 var(--display); font-stretch: 80%; letter-spacing: -.03em; color: #fff; margin: 0 0 24px; }
+.hero .lede { font-size: 1.24rem; line-height: 1.6; color: #c3d5ea; max-width: 42ch; margin: 0 0 30px; }
+.hero .cta { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.btn { display: inline-flex; align-items: center; gap: 10px; background: var(--cut); color: #fff; text-decoration: none; font: 600 1rem/1 var(--body); padding: 15px 24px; border-radius: 99px; transition: transform .18s, background .18s; border: 0; cursor: pointer; }
+.btn:hover { background: #a82814; color: #fff; transform: translateY(-2px); }
+.btn.ghost { background: transparent; color: #dbe7f5; border: 1.5px solid rgba(143,184,232,.55); }
+.btn.ghost:hover { background: rgba(255,255,255,.1); color: #fff; }
+.btn.dark { background: var(--ink); } .btn.dark:hover { background: var(--ink-2); }
+.btn.sm { padding: 11px 18px; font-size: .9rem; }
+@media (prefers-reduced-motion: reduce) { .btn { transition: none; } .btn:hover { transform: none; } }
+.hero .stats { display: flex; flex-wrap: wrap; gap: 8px 28px; margin: 36px 0 0; padding: 0; list-style: none; font-size: .92rem; color: #9db8d6; max-width: none; }
+.hero .stats li { margin: 0; }
+.hero .stats b { color: #fff; font-weight: 600; }
+
+/* the floor plan: the one memorable thing */
+.plan { width: 100%; height: auto; display: block; overflow: visible; }
+.plan .wall { fill: none; stroke: var(--blue-line); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.plan .thin { fill: none; stroke: rgba(143,184,232,.55); stroke-width: 1.2; }
+.plan .rack { fill: rgba(143,184,232,.07); stroke: rgba(143,184,232,.5); stroke-width: 1; }
+.plan .room { fill: rgba(143,184,232,.07); stroke: rgba(143,184,232,.6); stroke-width: 1.2; }
+.plan .truck { fill: rgba(255,255,255,.08); stroke: var(--blue-line); stroke-width: 1.5; }
+.plan .dim { fill: none; stroke: rgba(143,184,232,.6); stroke-width: 1; }
+.plan .t-mono { fill: #8fb0d4; font: 500 9.5px var(--mono); letter-spacing: .03em; }
+.plan .t-lbl { fill: #cfe0f3; font: 600 11px var(--body); }
+.plan .pin { cursor: pointer; }
+.plan .pin .halo { fill: var(--cut-hi); opacity: 0; transform-box: fill-box; transform-origin: center; }
+.plan .pin .dot { fill: var(--cut); stroke: #fff; stroke-width: 2; transition: transform .2s; transform-box: fill-box; transform-origin: center; }
+.plan .pin .n { fill: #fff; font: 700 14px var(--display); text-anchor: middle; dominant-baseline: central; pointer-events: none; }
+.plan .pin .tip { opacity: 0; transform: translateY(4px); transition: opacity .18s, transform .18s; pointer-events: none; }
+.plan .pin .tip rect { fill: #fff; }
+.plan .pin .tip text { fill: var(--ink); font: 600 12px var(--body); }
+.plan .pin .tip .leader { stroke: #fff; stroke-width: 1.4; fill: none; }
+.plan .pin:hover .tip, .plan .pin:focus .tip, .plan .pin.on .tip { opacity: 1; transform: none; }
+.plan .pin:hover .dot, .plan .pin:focus .dot, .plan .pin.on .dot { transform: scale(1.2); }
+.plan .pin:focus { outline: none; }
+.plan .pin:focus-visible .dot { stroke: #ffd2c9; stroke-width: 4; }
+/* The plan is always fully drawn. Motion is only a highlight on top, so a screenshot,
+   a file preview or a slow device never shows an empty plan. */
+.plan .trace { fill: none; stroke: #fff; stroke-width: 3; stroke-linecap: round; stroke-dasharray: .1 .9; opacity: 0; }
+@media (prefers-reduced-motion: no-preference) {
+  .plan .trace { animation: trace 2.6s cubic-bezier(.5,.1,.3,1) .4s 1 both; }
+  .plan .fade, .plan .rack { animation: settle .9s ease backwards; animation-delay: var(--d, 0s); }
+  .plan .pin .halo { animation: ping 2.8s ease-out infinite; animation-delay: var(--d, 2s); }
+  @keyframes trace { 0% { stroke-dashoffset: 0; opacity: 1; } 88% { opacity: 1; } 100% { stroke-dashoffset: -1; opacity: 0; } }
+  @keyframes settle { from { opacity: .35; } to { opacity: 1; } }
+  @keyframes ping { 0% { opacity: .55; transform: scale(1); } 70%, 100% { opacity: 0; transform: scale(2.7); } }
+}
+.plan-caption { font-size: .86rem; line-height: 1.4; color: #8fb0d4; margin: 14px 0 0; }
+
+/* ================= home: the day, as drawing sheets ================= */
+.wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+.band { padding: 64px 0 0; }
+.band h2 { margin-top: 0; }
+.sheets { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px; margin: 0; padding: 0; list-style: none; max-width: none; }
+.sheets li { margin: 0; }
+.sheet { display: flex; flex-direction: column; justify-content: space-between; min-height: 232px; height: 100%; background: var(--card); border: 2px solid var(--ink); border-radius: 3px 18px 3px 18px; padding: 16px 16px 0; text-decoration: none; color: var(--text); position: relative; overflow: hidden; transition: transform .22s cubic-bezier(.2,.7,.2,1), box-shadow .2s, background .2s; }
+a.sheet:hover, .sheet.hl { transform: translateY(-6px); box-shadow: 0 20px 34px -18px rgba(11,42,74,.5); color: var(--text); }
+a.sheet:hover .big, .sheet.hl .big { color: var(--cut); -webkit-text-stroke-color: var(--cut); }
+.sheet .big { font: 800 4.8rem/.8 var(--display); font-stretch: 75%; color: transparent; -webkit-text-stroke: 1.6px var(--ink); letter-spacing: -.03em; transition: color .2s; }
+.sheet .t { font: 600 1.06rem/1.2 var(--display); color: var(--ink); margin-top: 18px; }
+.sheet .foot { margin: 14px -16px 0; padding: 9px 16px; border-top: 2px solid var(--ink); background: var(--paper-2); font-size: .8rem; color: var(--muted); display: flex; justify-content: space-between; gap: 8px; }
+.sheet .foot b { color: var(--ink); white-space: nowrap; }
+.sheet .foot span { min-width: 0; }
+.sheet.pre { background: var(--ink); color: #eaf1fa; }
+.sheet.pre .big { -webkit-text-stroke-color: var(--blue-line); } .sheet.pre .t { color: #fff; }
+.sheet.pre .foot { background: #08213b; border-color: var(--blue-line); color: #9db8d6; } .sheet.pre .foot b { color: #fff; }
+.sheet.break { background: repeating-linear-gradient(-45deg, var(--paper-2) 0 12px, var(--paper) 12px 24px); border-style: dashed; border-color: var(--line-2); }
+.sheet.break .big { -webkit-text-stroke-color: var(--muted); } .sheet.break .t { color: var(--muted); }
+.sheet.break .foot { background: transparent; border-top: 2px dashed var(--line-2); }
+@media (prefers-reduced-motion: reduce) { .sheet { transition: none; } a.sheet:hover, .sheet.hl { transform: none; } }
+
+.mondays { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 7fr); gap: 36px; align-items: start; }
+.story { background: var(--ink); color: #dbe7f5; border-radius: 22px 6px 22px 6px; padding: 32px 34px 18px; position: relative; overflow: hidden; isolation: isolate; }
+.story::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(rgba(143,184,232,.09) 1px, transparent 1px) 0 0 / 24px 24px, linear-gradient(90deg, rgba(143,184,232,.09) 1px, transparent 1px) 0 0 / 24px 24px; -webkit-mask-image: linear-gradient(200deg, #000, transparent 70%); mask-image: linear-gradient(200deg, #000, transparent 70%); }
+.story h2 { margin: 0 0 14px; color: #fff; font-size: 2rem; }
+.story p { color: #c3d5ea; max-width: none; }
+.problems { list-style: none; padding: 0; margin: 0; max-width: none; counter-reset: pr; display: grid; gap: 12px; }
+.problems li { margin: 0; counter-increment: pr; background: var(--card); border: 1px solid var(--line-2); border-radius: 12px; padding: 16px 18px 16px 72px; position: relative; transition: border-color .2s, transform .2s, box-shadow .2s; }
+.problems li::before { content: counter(pr); position: absolute; left: 16px; top: 16px; width: 40px; height: 40px; border-radius: 50%; background: var(--ink); color: #fff; font: 700 1.2rem/40px var(--display); text-align: center; transition: background .2s; }
+.problems li.hl { border-color: var(--cut); transform: translateX(6px); box-shadow: 0 12px 24px -16px rgba(191,47,26,.5); }
+.problems li.hl::before { background: var(--cut); }
+.problems .p { font-weight: 600; color: var(--ink); line-height: 1.35; display: block; }
+.problems .s { color: var(--muted); font-size: .93rem; display: block; margin-top: 4px; line-height: 1.5; }
+.problems .s a { font-weight: 600; }
+@media (prefers-reduced-motion: reduce) { .problems li { transition: none; } .problems li.hl { transform: none; } }
+
+.howto { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; margin: 0; padding: 0; list-style: none; max-width: none; }
+.howto li { margin: 0; border-top: 3px solid var(--ink); padding-top: 14px; }
+.howto li b { display: block; color: var(--ink); font: 600 1.15rem/1.2 var(--display); margin-bottom: 6px; }
+.howto li span { color: var(--muted); font-size: .95rem; line-height: 1.55; display: block; }
+.start { margin-top: 56px; background: var(--card); border: 2px solid var(--ink); border-radius: 3px 22px 3px 22px; padding: 28px 32px; display: flex; flex-wrap: wrap; gap: 18px 32px; align-items: center; justify-content: space-between; }
+.start h2 { margin: 0 0 4px; font-size: 1.7rem; }
+.start p { margin: 0; color: var(--muted); }
+
+/* ================= pager ================= */
+.pager { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 72px; }
+.pager a { display: block; text-decoration: none; background: var(--card); border: 2px solid var(--ink); border-radius: 3px 16px 3px 16px; padding: 18px 22px; color: var(--ink); transition: transform .2s, box-shadow .2s; }
+.pager a:hover { transform: translateY(-3px); box-shadow: 0 14px 24px -16px rgba(11,42,74,.5); color: var(--ink); }
+.pager small { display: block; font: 500 .86rem/1 var(--body); color: var(--muted); margin-bottom: 8px; }
+.pager b { font: 600 1.25rem/1.2 var(--display); }
+.pager .next { grid-column: 2; text-align: right; background: var(--ink); color: #fff; border-radius: 16px 3px 16px 3px; }
+.pager .next:hover { background: var(--ink-2); color: #fff; }
+.pager .next small { color: #8fb0d4; }
+.pager .prev { grid-column: 1; }
+@media (prefers-reduced-motion: reduce) { .pager a { transition: none; } .pager a:hover { transform: none; } }
+.footer { text-align: center; color: var(--muted); font-size: .86rem; padding: 0 28px 48px; }
+
+/* ================= responsive ================= */
+@media (max-width: 1100px) {
+  .sheets { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .hero-in { grid-template-columns: minmax(0, 1fr); gap: 24px; padding-top: 44px; }
+  .mondays { grid-template-columns: minmax(0, 1fr); }
+  .howto { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+}
+@media (max-width: 900px) {
+  .floor { grid-template-columns: minmax(0, 1fr); gap: 28px; padding: 24px 18px 72px; }
+  .rail { position: static; }
+  .rail ol { display: flex; gap: 8px; overflow-x: auto; padding: 2px 2px 10px; scroll-snap-type: x proximity; }
+  .rail ol::before { display: none; }
+  .rail li { flex: 0 0 auto; margin: 0; scroll-snap-align: start; }
+  .rail li a, .rail li .gap { grid-template-columns: 38px auto; gap: 10px; padding: 5px 16px 5px 5px; border: 1.5px solid var(--line-2); border-radius: 99px; background: var(--card); }
+  .rail li a[aria-current="page"] { border-color: var(--ink); }
+  .rail .no { width: 38px; height: 38px; font-size: 1rem; }
+  .rail .m, .rail .side, .rail h2 { display: none; }
+  .rail li .gap { border-style: dashed; }
+  .bar-in { padding: 10px 18px; gap: 12px; } .bar .meta { display: none; } .meter { width: 56px; }
+  .brand { white-space: nowrap; font-size: 1.1rem; } .progress-wrap { white-space: nowrap; gap: 8px; font-size: .8rem; }
+  .titleblock .top { grid-template-columns: minmax(0, 1fr); gap: 10px; padding: 26px 22px 20px; }
+  .titleblock .sheetno { font-size: 4.6rem; }
+  .titleblock dl > div { padding: 12px 16px 14px 22px; }
+  .step { grid-template-columns: minmax(0, 1fr); }
+  .step .gutter { flex-direction: row; justify-content: flex-start; gap: 14px; padding: 12px 20px; border-right: 0; border-bottom: 1px solid var(--line); }
+  .step .gutter::after { display: none; }
+  .step .tag { font-size: 1.7rem; }
+  .step .inner { padding: 18px 18px 8px; }
+  .hero-in { padding: 32px 18px 32px; }
+  .wrap { padding: 0 18px; }
+  .sheets { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .sheet { min-height: 200px; } .sheet .big { font-size: 3.8rem; }
+  .pager { grid-template-columns: minmax(0, 1fr); } .pager .next, .pager .prev { grid-column: 1; text-align: left; }
+  .score thead { display: none; }
+  .score, .score tbody, .score tr, .score td { display: block; width: 100%; }
+  .score tr { padding: 10px 0; border-bottom: 1px solid var(--line); }
+  .score td { border: 0; padding: 2px 16px; }
+  .score td.pick { padding-top: 6px; }
+}
+@media (max-width: 520px) {
+  body { font-size: 16.5px; }
+  .brand span { display: none; } .progress-wrap { margin-left: auto; }
+  .sheets { grid-template-columns: minmax(0, 1fr); }
+  .sheet { min-height: 0; padding-top: 14px; }
+  .sheet .t { margin-top: 12px; }
+  .start { padding: 22px 20px; }
+}
+
+/* ================= scorecard ================= */
+.score label { display: inline-flex; align-items: center; gap: 4px; margin-right: 10px; cursor: pointer; font-size: .92rem; padding: 4px 2px; }
+.score input { accent-color: var(--cut); width: 18px; height: 18px; }
+
+/* ================= print ================= */
+@media print {
+  .bar, .rail, .pager, .copy, .step .gutter input, .hero::before { display: none !important; }
+  body { background: #fff; font-size: 11.5pt; }
+  .floor { display: block; padding: 0; }
+  .step, .tbl, .note, .prompt { box-shadow: none; break-inside: avoid; }
+  .code { background: #f3f3f3; color: #000; box-shadow: none; } .code pre, .code .cap { color: #000; background: #f3f3f3; }
+  .code [class^="tk-"] { color: #000 !important; }
+  details.stuck:not([open]) .in { display: block; }
+  .titleblock { background: #fff; color: #000; border: 2px solid #000; } .titleblock h1, .titleblock dd { color: #000; } .titleblock .sheetno { -webkit-text-stroke-color: #000; }
+}
+</style>
+</head>
+<body data-page="lab-1">
+<a class="skip" href="#main">Skip to content</a>
+<header class="bar">
+  <div class="bar-in">
+    <a class="brand" href="index.html"><svg viewBox="0 0 32 32" width="30" height="30" aria-hidden="true"><rect x="1.5" y="1.5" width="29" height="29" rx="7" fill="#0b2a4a"/><path d="M7 25V9.5h8.5M7 17h12M19 25V13.5h6" fill="none" stroke="#8fb8e8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="25" cy="8" r="3" fill="#ff7a63"/></svg><span>Smart Branch in a Day</span></a>
+    <span class="meta">Siam Global House × IBM Bob</span>
+    <div class="progress-wrap" id="progress-wrap" hidden><span id="progress-label" aria-live="polite"></span><span class="meter" aria-hidden="true"><i id="progress-fill"></i></span></div>
+  </div>
+</header>
+<div class="floor">
+  <nav class="rail" aria-label="Workshop map">
+    <h2>Workshop map</h2>
+    <ol><li><a href="step-0.html"><span class="no">0</span><span class="t">Set up<span class="m">Before the day · about 30 min</span></span></a></li><li><a href="lab-1.html" aria-current="page"><span class="no">1</span><span class="t">Understand Bob's capability<span class="m">60 min</span></span></a></li><li><a href="lab-2.html"><span class="no">2</span><span class="t">Create an app with Bob<span class="m">40 min</span></span></a></li><li><a href="lab-3.html"><span class="no">3</span><span class="t">Bob CLI in GitHub Actions<span class="m">60 min</span></span></a></li><li><div class="gap"><span class="no">–</span><span class="t">Break<span class="m">60 min</span></span></div></li><li><a href="lab-4.html"><span class="no">4</span><span class="t">Bob Desktop<span class="m">60 min</span></span></a></li></ol>
+    <div class="side"><a href="facilitator.html">Facilitator guide</a><a href="downloads/ghh-bob-workshop-kit.zip" download>Download the code kit</a></div>
+  </nav>
+  <main id="main">
+<header class="titleblock"><div class="top"><div class="sheetno" aria-hidden="true">1</div><div><h1>Understand Bob's capability</h1><p class="sub">Learn how to use MCP, skills and modes on Bob.</p></div></div><dl><div><dt>Time</dt><dd>60 minutes</dd></div><div><dt>Where</dt><dd>Bob IDE, with the kit folder open</dd></div><div><dt>You build</dt><dd>A skill, a mode and an MCP server connection</dd></div><div><dt>Question</dt><dd>What does Khun Somchai need to order before the 9:00 truck?</dd></div></dl></header>
+
+<p class="lead">Bob is only as useful as the context it has. In this lab you give it three kinds: a <b>skill</b> (how we write code), a <b>mode</b> (who Bob is for this job) and an <b>MCP server</b> (live access to our stock data). You will ask the same question before and after, and see the difference.</p>
+
+<div class="tbl"><table><thead><tr><th>Piece</th><th>What it is</th><th>Where it lives</th></tr></thead><tbody><tr><td>Mode</td><td>A role for Bob: what it is, which tools it may use, which files it may edit</td><td><code>.bob/custom_modes.yaml</code></td></tr><tr><td>Skill</td><td>A reusable set of instructions Bob follows when the task matches</td><td><code>.bob/skills/&lt;name&gt;/SKILL.md</code></td></tr><tr><td>MCP server</td><td>A small program that gives Bob new tools, here: read our stock and sales</td><td><code>.bob/mcp.json</code></td></tr></tbody></table></div>
+
+<div class="steps"><section class="step" id="step-1"><div class="gutter"><span class="tag">1</span><input type="checkbox" aria-label="Mark step 1 done"></div><div class="inner"><h3>Open the kit folder and meet the three built-in modes<span class="mins">8 min</span></h3>
+<p>In the Bob IDE, open the <b>kit folder</b> (the one with <code>package.json</code> in it). Open the Bob chat and look at the mode picker.</p>
+<ul><li><b>Ask</b>: answers questions. Changes nothing.</li><li><b>Plan</b>: designs the work and writes plans. Edits only text files.</li><li><b>Agent</b>: reads, edits and runs commands to finish a task.</li></ul>
+<p>Try Ask first:</p>
+<div class="prompt" data-copyable><div class="who">Ask mode</div><p>What does the data/ folder contain? Which files would I read to find products that are running out of stock at Khon Kaen?</p><button class="copy" type="button">Copy</button></div>
+<div class="note expect"><p class="h">You should see</p><p>Bob lists the four data files and points at <code>stock.json</code> (stock levels) and <code>products.json</code> (names).</p></div>
+</div></section>
+<section class="step" id="step-2"><div class="gutter"><span class="tag">2</span><input type="checkbox" aria-label="Mark step 2 done"></div><div class="inner"><h3>Ask the real question with no setup (your baseline)<span class="mins">6 min</span></h3>
+<p>Still in Ask mode:</p>
+<div class="prompt" data-copyable><div class="who">Ask mode</div><p>Which products are sold out or low on stock at Khon Kaen (KKN)? Give me SKU and English name, as a short list.</p><button class="copy" type="button">Copy</button></div>
+<p>Bob will open files and work it out. Write down: how long it took, how many files it opened, and the answer. You will compare in step 7.</p>
+<div class="note tip"><p class="h">Tip</p><p>"Low" means <code>onHand</code> is at or below <code>reorderPoint</code>. Bob does not know that rule yet, so it may guess a different one. That is the problem skills and tools solve.</p></div>
+</div></section>
+<section class="step" id="step-3"><div class="gutter"><span class="tag">3</span><input type="checkbox" aria-label="Mark step 3 done"></div><div class="inner"><h3>Write a skill: our coding standard<span class="mins">10 min</span></h3>
+<p>A skill is a folder with a <code>SKILL.md</code>. The top part says what it is for. The rest is the instructions. Bob decides when to use it from the description, so write the description for when to use it.</p>
+<p>Create this folder structure in the kit folder:</p>
+<div class="code short" data-copyable><div class="cap"><span class="name">create these two files</span><button class="copy" type="button">Copy</button></div><pre><code><span class="l">.bob/skills/ghh-coding-standard/SKILL.md
+</span><span class="l">.bob/skills/ghh-coding-standard/sku-format.md</span></code></pre></div>
+<p>Put this in <code>SKILL.md</code>:</p>
+<div class="code" data-copyable><div class="cap"><span class="name">.bob/skills/ghh-coding-standard/SKILL.md</span><button class="copy" type="button">Copy</button></div><pre><code><span class="l"><span class="tk-p">---</span>
+</span><span class="l"><span class="tk-key">name</span><span class="tk-p">:</span> <span class="tk-s">ghh-coding-standard</span>
+</span><span class="l"><span class="tk-key">description</span><span class="tk-p">:</span> <span class="tk-s">Global House coding standard for JavaScript services. Use when writing or reviewing code that handles products, SKUs, stock levels, prices or Thai baht amounts.</span>
+</span><span class="l"><span class="tk-p">---</span>
+</span><span class="l">
+</span><span class="l">Follow these rules for any Global House JavaScript code. Read <span class="tk-s">`sku-format.md`</span> in this folder when you need the SKU rules.
+</span><span class="l">
+</span><span class="l"><span class="tk-fn">&lt;Steps&gt;</span>
+</span><span class="l"><span class="tk-fn">&lt;Step&gt;</span>
+</span><span class="l">Money is Thai baht (THB). Show it as <span class="tk-s">`฿1,234.50`</span>: the ฿ sign, thousands separators, two decimals. Never use <span class="tk-s">`$`</span>. Keep prices as numbers in code and format them only when displaying.
+</span><span class="l"><span class="tk-fn">&lt;/Step&gt;</span>
+</span><span class="l">
+</span><span class="l"><span class="tk-fn">&lt;Step&gt;</span>
+</span><span class="l">SKUs follow <span class="tk-s">`GH-&lt;CAT&gt;-&lt;NNNN&gt;`</span>, for example <span class="tk-s">`GH-CEM-1001`</span>. Compare SKUs case-insensitively but always store and return them in upper case.
+</span><span class="l"><span class="tk-fn">&lt;/Step&gt;</span>
+</span><span class="l">
+</span><span class="l"><span class="tk-fn">&lt;Step&gt;</span>
+</span><span class="l">Stock on hand is a whole number and is never negative. Any code that subtracts stock must check that enough stock exists first and return a clear error if not.
+</span><span class="l"><span class="tk-fn">&lt;/Step&gt;</span>
+</span><span class="l">
+</span><span class="l"><span class="tk-fn">&lt;Step&gt;</span>
+</span><span class="l">Validate every value that comes from a request (query string, body, params) before using it. Reject unknown branch codes, unknown statuses and out-of-range numbers with HTTP 400 and a message that says what is allowed.
+</span><span class="l"><span class="tk-fn">&lt;/Step&gt;</span>
+</span><span class="l">
+</span><span class="l"><span class="tk-fn">&lt;Step&gt;</span>
+</span><span class="l">Product names are stored in both English and Thai. Keep Thai text as UTF-8 and never truncate by bytes. Search must work in both languages.
+</span><span class="l"><span class="tk-fn">&lt;/Step&gt;</span>
+</span><span class="l">
+</span><span class="l"><span class="tk-fn">&lt;Step&gt;</span>
+</span><span class="l">Never put keys, tokens or passwords in source files. Read them from environment variables.
+</span><span class="l"><span class="tk-fn">&lt;/Step&gt;</span>
+</span><span class="l"><span class="tk-fn">&lt;/Steps&gt;</span>
+</span><span class="l">
+</span><span class="l">When you finish, list which of these rules you applied.</span></code></pre></div>
+<p>And this in <code>sku-format.md</code>. It is a supporting file. Bob reads it only when it needs it.</p>
+<div class="code" data-copyable><div class="cap"><span class="name">.bob/skills/ghh-coding-standard/sku-format.md</span><button class="copy" type="button">Copy</button></div><pre><code><span class="l"><span class="tk-k"># SKU format</span>
+</span><span class="l">
+</span><span class="l"><span class="tk-s">`GH-&lt;CAT&gt;-&lt;NNNN&gt;`</span>
+</span><span class="l">
+</span><span class="l">| Code | Category |
+</span><span class="l">|------|----------|
+</span><span class="l">| CEM | Cement &amp; Structure (ปูนและโครงสร้าง) |
+</span><span class="l">| ROF | Roofing (หลังคา) |
+</span><span class="l">| PLB | Plumbing (ประปา) |
+</span><span class="l">| ELC | Electrical (ไฟฟ้า) |
+</span><span class="l">| PNT | Paint (สี) |
+</span><span class="l">| TIL | Tiles &amp; Flooring (กระเบื้องและพื้น) |
+</span><span class="l">| TLS | Tools (เครื่องมือช่าง) |
+</span><span class="l">| GRD | Garden (สวน) |
+</span><span class="l">| DEC | Home Decor (ของตกแต่งบ้าน) |
+</span><span class="l">| DRW | Doors &amp; Windows (ประตูหน้าต่าง) |
+</span><span class="l">
+</span><span class="l"><span class="tk-s">`NNNN`</span> is four digits starting at 1001 within each category.
+</span><span class="l">
+</span><span class="l">Valid pattern: <span class="tk-s">`/^GH-(CEM|ROF|PLB|ELC|PNT|TIL|TLS|GRD|DEC|DRW)-\d{4}$/`</span>
+</span><span class="l">
+</span><span class="l">Branch codes: <span class="tk-s">`KKN`</span> Khon Kaen, <span class="tk-s">`ROE`</span> Roi Et, <span class="tk-s">`UDN`</span> Udon Thani.</span></code></pre></div>
+<p>Check that Bob sees it: open Bob settings and look for the <b>Skills</b> tab. <code>ghh-coding-standard</code> should be listed.</p>
+<div class="note tip"><p class="h">Tip</p><p>Short on time? The same files are in <code>answers/lab1/skills/</code>. Copy the folder into <code>.bob/skills/</code>.</p></div>
+<details class="stuck"><summary>If it does not work</summary><div class="in"><ul><li>Skill not listed: the folder must be inside <code>.bob/skills/</code> in the folder you opened, and the file must be named exactly <code>SKILL.md</code>.</li><li>The top of the file must start with <code>---</code> on the first line.</li><li>By default Bob asks before using a skill. That is expected. Approve it.</li></ul></div></details>
+</div></section>
+<section class="step" id="step-4"><div class="gutter"><span class="tag">4</span><input type="checkbox" aria-label="Mark step 4 done"></div><div class="inner"><h3>Test the skill<span class="mins">6 min</span></h3>
+<p>Switch to Agent mode. Ask for code that touches money and stock:</p>
+<div class="prompt" data-copyable><div class="who">Agent mode</div><p>Write a small JavaScript module lib/reserve.js with two functions: formatPrice(amount) for showing a product price, and reserveStock(onHand, qty) that returns the new stock level. Do not run anything. Just write the file.</p><button class="copy" type="button">Copy</button></div>
+<div class="note expect"><p class="h">You should see</p><ul><li><code>formatPrice(1234.5)</code> gives <code>฿1,234.50</code>, not <code>$</code>.</li><li><code>reserveStock</code> refuses a quantity larger than stock instead of going negative.</li><li>Bob says it used the skill and lists the rules it applied.</li></ul></div>
+<p>Delete <code>lib/reserve.js</code> when you are done. It is not part of the kit.</p>
+</div></section>
+<section class="step" id="step-5"><div class="gutter"><span class="tag">5</span><input type="checkbox" aria-label="Mark step 5 done"></div><div class="inner"><h3>Create a custom mode: GHH Data Analyst<span class="mins">8 min</span></h3>
+<p>A mode sets a role, picks which tool groups Bob may use, and can restrict which files it may edit. This one can read, use MCP tools and skills, and may only write Markdown files in <code>reports/</code>.</p>
+<p>Create <code>.bob/custom_modes.yaml</code> in the kit folder:</p>
+<div class="code" data-copyable><div class="cap"><span class="name">.bob/custom_modes.yaml</span><button class="copy" type="button">Copy</button></div><pre><code><span class="l"><span class="tk-key">customModes</span><span class="tk-p">:</span>
+</span><span class="l">  <span class="tk-p">- </span><span class="tk-key">slug</span><span class="tk-p">:</span> <span class="tk-s">ghh-data-analyst</span>
+</span><span class="l">    <span class="tk-key">name</span><span class="tk-p">:</span> <span class="tk-s">GHH Data Analyst</span>
+</span><span class="l">    <span class="tk-key">description</span><span class="tk-p">:</span> <span class="tk-s">Answers stock and sales questions for Global House branches and writes short reports.</span>
+</span><span class="l">    <span class="tk-key">roleDefinition</span><span class="tk-p">:</span> <span class="tk-p">&gt;-</span>
+</span><span class="l"><span class="tk-t">      You are a data analyst for Siam Global House, a Thai home-improvement retailer.</span>
+</span><span class="l"><span class="tk-t">      You answer questions about branch stock and sales using the ghh-inventory MCP tools,</span>
+</span><span class="l"><span class="tk-t">      never from memory. You show money in Thai baht as ฿1,234.50. You answer in the</span>
+</span><span class="l"><span class="tk-t">      language the user writes in, and you keep product names in both English and Thai when</span>
+</span><span class="l"><span class="tk-t">      you list products.</span>
+</span><span class="l">    <span class="tk-key">whenToUse</span><span class="tk-p">:</span> <span class="tk-s">Use this mode for questions about stock levels, reorders and sales at a Global House branch.</span>
+</span><span class="l">    <span class="tk-key">customInstructions</span><span class="tk-p">:</span> <span class="tk-p">|-</span>
+</span><span class="l"><span class="tk-t">      Always call an ghh-inventory tool before stating any stock or sales number.</span>
+</span><span class="l"><span class="tk-t">      If a tool returns an error, show the error text and ask the user what to change.</span>
+</span><span class="l"><span class="tk-t">      Do not guess a branch. If the user does not name one, ask which of KKN, ROE or UDN.</span>
+</span><span class="l"><span class="tk-t">      When you write a report, save it as Markdown under reports/ and start it with the data date.</span>
+</span><span class="l"><span class="tk-t">      Keep answers short: a one-line finding first, then a small table or list.</span>
+</span><span class="l">    <span class="tk-key">groups</span><span class="tk-p">:</span>
+</span><span class="l">      <span class="tk-p">- </span><span class="tk-s">read</span>
+</span><span class="l">      <span class="tk-p">- </span><span class="tk-s">mcp</span>
+</span><span class="l">      <span class="tk-p">- </span><span class="tk-s">skill</span>
+</span><span class="l">      <span class="tk-p">- - </span><span class="tk-s">edit</span>
+</span><span class="l">        <span class="tk-p">- </span><span class="tk-key">fileRegex</span><span class="tk-p">:</span> <span class="tk-s">"^reports/.*\\.md$"</span>
+</span><span class="l">          <span class="tk-key">description</span><span class="tk-p">:</span> <span class="tk-s">Markdown reports in the reports/ folder only</span></span></code></pre></div>
+<p>Open the mode picker. <b>GHH Data Analyst</b> should appear.</p>
+<div class="note tip"><p class="h">Tip</p><p>The key line is <code>fileRegex: "^reports/.*\\.md$"</code>. It is a hard limit, not a polite request. If you ask this mode to edit a <code>.js</code> file, it cannot. That is why custom modes are safe to hand to non-developers.</p></div>
+<details class="stuck"><summary>If it does not work</summary><div class="in"><ul><li>Mode not in the picker: check the file is <code>.bob/custom_modes.yaml</code> (with the dot) and the first line is <code>customModes:</code>.</li><li>YAML is strict about spaces. Use spaces, not tabs. Copy the block as it is.</li><li>Still stuck: copy from <code>answers/lab1/custom_modes.yaml</code>.</li></ul></div></details>
+</div></section>
+<section class="step" id="step-6"><div class="gutter"><span class="tag">6</span><input type="checkbox" aria-label="Mark step 6 done"></div><div class="inner"><h3>Connect the MCP server<span class="mins">10 min</span></h3>
+<p>The kit has a small MCP server in <code>lab1/mcp/inventory-server.js</code>. It gives Bob four read-only tools:</p>
+<div class="tbl"><table><thead><tr><th>Tool</th><th>Answers</th></tr></thead><tbody><tr><td><code>get_low_stock</code></td><td>What is low or sold out at a branch?</td></tr><tr><td><code>get_product</code></td><td>Price and stock of one product, by SKU or by name in English or Thai</td></tr><tr><td><code>get_sales_summary</code></td><td>Revenue and top products over the last N days</td></tr><tr><td><code>suggest_reorder</code></td><td>How much to order, and what it costs</td></tr></tbody></table></div>
+<p>Bob needs to know how to start it. Generate the config for your laptop, with the right folder paths filled in:</p>
+<div class="code short" data-copyable><div class="cap"><span class="name">terminal, inside the kit folder</span><button class="copy" type="button">Copy</button></div><pre><code><span class="l"><span class="tk-fn">npm</span> run mcp:config -- <span class="tk-k">--write</span></span></code></pre></div>
+<p>This writes <code>.bob/mcp.json</code>. It looks like this (your paths will differ):</p>
+<div class="code" data-copyable><div class="cap"><span class="name">.bob/mcp.json</span><button class="copy" type="button">Copy</button></div><pre><code><span class="l"><span class="tk-p">{</span>
+</span><span class="l">  <span class="tk-key">"mcpServers"</span><span class="tk-p">:</span> <span class="tk-p">{</span>
+</span><span class="l">    <span class="tk-key">"ghh-inventory"</span><span class="tk-p">:</span> <span class="tk-p">{</span>
+</span><span class="l">      <span class="tk-key">"command"</span><span class="tk-p">:</span> <span class="tk-s">"/path/to/node"</span><span class="tk-p">,</span>
+</span><span class="l">      <span class="tk-key">"args"</span><span class="tk-p">:</span> <span class="tk-p">[</span><span class="tk-s">"/path/to/kit/lab1/mcp/inventory-server.js"</span><span class="tk-p">]</span><span class="tk-p">,</span>
+</span><span class="l">      <span class="tk-key">"alwaysAllow"</span><span class="tk-p">:</span> <span class="tk-p">[</span><span class="tk-s">"get_low_stock"</span><span class="tk-p">,</span> <span class="tk-s">"get_product"</span><span class="tk-p">,</span> <span class="tk-s">"get_sales_summary"</span><span class="tk-p">,</span> <span class="tk-s">"suggest_reorder"</span><span class="tk-p">]</span><span class="tk-p">,</span>
+</span><span class="l">      <span class="tk-key">"disabled"</span><span class="tk-p">:</span> <span class="tk-n">false</span>
+</span><span class="l">    <span class="tk-p">}</span>
+</span><span class="l">  <span class="tk-p">}</span>
+</span><span class="l"><span class="tk-p">}</span></span></code></pre></div>
+<p>Now open Bob settings, go to <b>MCP</b>, and check <code>ghh-inventory</code> is listed and connected with four tools.</p>
+<div class="note expect"><p class="h">You should see</p><p>The server shows as connected, with <code>get_low_stock</code>, <code>get_product</code>, <code>get_sales_summary</code> and <code>suggest_reorder</code> listed.</p></div>
+<div class="note warn"><p class="h">Careful</p><p>The server talks to Bob over standard output. If you edit it, never use <code>console.log</code> in it. Use <code>console.error</code>. A stray <code>console.log</code> breaks the connection.</p></div>
+<details class="stuck"><summary>If it does not work</summary><div class="in"><ul><li>Not connected: run <code>node lab1/mcp/inventory-server.js</code> in a terminal. It should print <code>ghh-inventory MCP server ready</code> and wait. Press <kbd>Ctrl</kbd>+<kbd>C</kbd> to stop. If it crashes, run <code>npm install</code>.</li><li>Connected but no tools: open the server in settings and check no tool is switched off.</li><li>Another way to add it: <code>bob mcp add</code> exists in Bob CLI, but the file above is simpler.</li></ul></div></details>
+</div></section>
+<section class="step" id="step-7"><div class="gutter"><span class="tag">7</span><input type="checkbox" aria-label="Mark step 7 done"></div><div class="inner"><h3>Ask again with the mode and the tools<span class="mins">8 min</span></h3>
+<p>Pick <b>GHH Data Analyst</b> in the mode picker and ask the same question as in step 2:</p>
+<div class="prompt" data-copyable><div class="who">GHH Data Analyst mode</div><p>Which products are sold out or low on stock at Khon Kaen?</p><button class="copy" type="button">Copy</button></div>
+<div class="note expect"><p class="h">You should see</p><ul><li>Bob calls <code>get_low_stock</code> with branch <code>KKN</code>. It does not open data files.</li><li><b>4 sold out</b>: <code>GH-CEM-1001</code>, <code>GH-CEM-1005</code>, <code>GH-ELC-1004</code>, <code>GH-PNT-1006</code>.</li><li><b>8 low</b>: <code>GH-ROF-1002</code>, <code>GH-PLB-1001</code>, <code>GH-PLB-1002</code>, <code>GH-PLB-1006</code>, <code>GH-ELC-1003</code>, <code>GH-PNT-1001</code>, <code>GH-TLS-1005</code>, <code>GH-GRD-1001</code>.</li></ul></div>
+<p>Now go further:</p>
+<div class="prompt" data-copyable><div class="who">GHH Data Analyst mode</div><p>What should Khun Somchai order before the 9:00 truck? Use the reorder tool and put the answer in a table with SKU, name, quantity and cost in baht.</p><button class="copy" type="button">Copy</button></div>
+<div class="note expect"><p class="h">You should see</p><p>12 products to order, about <b>฿228,724.17</b> in total. The biggest line is <code>GH-CEM-1001</code> (Portland cement 50 kg), 402 bags for ฿46,129.50.</p></div>
+<p>Try the Thai search, and a branch that does not exist:</p>
+<div class="prompt" data-copyable><div class="who">GHH Data Analyst mode</div><p>ค้นหาสินค้า ปูนซีเมนต์ ดูสต็อกทุกสาขา</p><button class="copy" type="button">Copy</button></div>
+<div class="prompt" data-copyable><div class="who">GHH Data Analyst mode</div><p>What is low on stock at the Bangkok branch?</p><button class="copy" type="button">Copy</button></div>
+<div class="note expect"><p class="h">You should see</p><p>The first finds <code>GH-CEM-1001</code> and shows stock for all three branches. The second does not make up an answer. Either Bob asks which of KKN, ROE or UDN you mean, or the tool rejects the branch and Bob shows you that error.</p></div>
+</div></section>
+<section class="step" id="step-8"><div class="gutter"><span class="tag">8</span><input type="checkbox" aria-label="Mark step 8 done"></div><div class="inner"><h3>Write the report, then compare<span class="mins">4 min</span></h3>
+<p>Ask the mode for a file:</p>
+<div class="prompt" data-copyable><div class="who">GHH Data Analyst mode</div><p>Write a one-page report for Khun Somchai: what is sold out, what is low, and the reorder list with the total cost. Save it as reports/khon-kaen-reorder.md.</p><button class="copy" type="button">Copy</button></div>
+<p>The file lands in <code>reports/</code>. Now try to make the mode break its own rule:</p>
+<div class="prompt" data-copyable><div class="who">GHH Data Analyst mode</div><p>Also fix a typo in package.json.</p><button class="copy" type="button">Copy</button></div>
+<div class="note expect"><p class="h">You should see</p><p>Bob cannot edit <code>package.json</code> in this mode. It tells you so.</p></div>
+<p>Compare with step 2:</p>
+<div class="tbl"><table><thead><tr><th></th><th>Step 2: plain Ask</th><th>Step 7: mode + skill + MCP</th></tr></thead><tbody><tr><td>Where the numbers come from</td><td>Bob read files and guessed the rules</td><td>A tool that applies the real rules</td></tr><tr><td>Money format</td><td>Whatever Bob picked</td><td>฿ with two decimals, from the skill and mode</td></tr><tr><td>Can it change code?</td><td>No (Ask)</td><td>Only <code>reports/*.md</code></td></tr></tbody></table></div>
+</div></section></div>
+
+<h2>What you learned</h2>
+<ul><li>A <b>skill</b> teaches Bob how your team works. Write it once, every task benefits.</li><li>A <b>mode</b> sets a role and hard limits on tools and files.</li><li>An <b>MCP server</b> gives Bob live data and actions. Good descriptions on the tools matter, because Bob picks tools by reading them.</li><li>MCP servers run code on your laptop. Only add ones you trust, and read what they do.</li></ul>
+<p>Next: <a href="lab-2.html">Lab 2, build the stock dashboard</a>. The skill you wrote goes with you.</p>
+
+<nav class="pager" aria-label="Previous and next page"><a class="prev" href="step-0.html"><small>Back</small><b>Set up</b></a><a class="next" href="lab-2.html"><small>Next</small><b>Create an app with Bob</b></a></nav>
+  </main>
+</div>
+<script src="assets/site.js"></script>
+</body>
+</html>

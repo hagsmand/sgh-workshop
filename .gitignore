@@ -1,0 +1,61 @@
+# Smart Branch in a Day: workshop material
+#
+# Rule of thumb: commit what a person wrote, ignore what a command makes.
+# To get everything back after a fresh clone:
+#   cd kit && npm install && npm run setup && cd .. && node build/build.js
+
+# ---------- dependencies ----------
+node_modules/
+# The kit root keeps its lockfile. Lockfiles made inside lab folders are participants' own.
+/kit/lab2/**/package-lock.json
+/kit/lab3/**/package-lock.json
+
+# ---------- made by `npm run setup` (kit/scripts/*.js) ----------
+/kit/data/
+/kit/lab2/starter/data/
+/kit/lab2/starter/src/data.js
+/kit/lab2/solution/data/
+/kit/lab2/solution/src/data.js
+/kit/lab3/repo/
+/kit/lab4/monday-pack/
+
+# Reports Bob writes during lab 1. Keep the folder, not the files.
+/kit/reports/*
+!/kit/reports/.gitkeep
+
+# ---------- made by `node build/build.js` ----------
+# site/ itself is the deliverable and stays tracked (including the kit zip).
+/build/.zipwrap/
+
+# ---------- Bob and Claude, local only ----------
+# Every .bob/ folder is generated or personal: mcp.json holds machine paths or tokens,
+# and the lab 1 and lab 2 skills are rebuilt by setup. The lab answers live in kit/answers/.
+.bob/
+.claude/*
+!.claude/launch.json
+
+# ---------- secrets ----------
+# A Bob API key must never be committed. Use GitHub secrets or your shell instead.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# ---------- scratch files from running lab 3 by hand ----------
+pr.diff
+bob-result.json
+
+# ---------- logs ----------
+*.log
+npm-debug.log*
+
+# ---------- OS and editors ----------
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+
+
+.claude
