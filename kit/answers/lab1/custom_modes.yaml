@@ -10,7 +10,7 @@ customModes:
       you list products.
     whenToUse: Use this mode for questions about stock levels, reorders and sales at a Global House branch.
     customInstructions: |-
-      Always call an ghh-inventory tool before stating any stock or sales number.
+      Always call a ghh-inventory tool before stating any stock or sales number.
       If a tool returns an error, show the error text and ask the user what to change.
       Do not guess a branch. If the user does not name one, ask which of KKN, ROE or UDN.
       When you write a report, save it as Markdown under reports/ and start it with the data date.

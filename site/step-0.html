@@ -115,7 +115,6 @@ main { min-width: 0; }
 .titleblock dl > div:first-child { border-left: 0; }
 .titleblock dt { font: 500 .82rem/1 var(--body); color: #8fb0d4; margin-bottom: 7px; }
 .titleblock dd { margin: 0; font: 600 .98rem/1.38 var(--body); color: #fff; }
-.titleblock dd code { background: rgba(255,255,255,.12); color: #fff; }
 
 .lead { font-size: 1.28rem; line-height: 1.6; max-width: 62ch; margin: 0 0 32px; color: var(--text); }
 .lead b { color: var(--ink); }
@@ -208,7 +207,14 @@ tr:last-child td { border-bottom: 0; }
 th { font: 600 .88rem/1.25 var(--body); color: var(--ink); background: var(--paper-2); white-space: nowrap; border-bottom: 1px solid var(--line-2); }
 tbody tr:hover td { background: rgba(11,42,74,.035); }
 td code { white-space: nowrap; }
+td code.wrap { white-space: normal; display: inline; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
 td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* Inline code on dark surfaces (story box, hero, title block): light text on a lifted chip.
+   The default chip is dark ink on pale tint, which vanishes on navy. */
+.story code, .hero code, .titleblock code, .code-on-dark code {
+  background: rgba(143, 184, 232, .2); color: #fff; font-weight: 500;
+}
 
 /* ================= home: hero ================= */
 .hero { background: var(--ink); color: #eaf1fa; position: relative; isolation: isolate; overflow: hidden; }
