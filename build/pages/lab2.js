@@ -75,7 +75,7 @@ ${prompt('Review src/server.js and public/index.html for problems: unvalidated q
       body: `
 <p>Done early? Add the "Suggest reorder" button from the spec.</p>
 ${prompt('Add GET /api/reorder as described in SPEC.md, with tests, and a Suggest reorder button on the page that shows the list and the total estimated cost in baht.', 'Agent mode')}
-${note('expect', `<p>For Khon Kaen: <b>${F.reorder.count} products</b> to order, estimated total <b>${F.reorder.totalFmt}</b>. Check the first line: <code>${F.reorder.top[0].sku}</code>, ${F.reorder.top[0].qty} ${F.reorder.top[0].unit}s, ${F.reorder.top[0].cost}.</p>`)}
+${note('expect', `<p>Restart the server first, because Bob added a new route. Click the server's terminal, press <kbd>Ctrl</kbd>+<kbd>C</kbd>, then run <code>npm start</code> in <code>lab2/starter</code>. Open <code>http://localhost:3000</code>, choose Khon Kaen and click <b>Suggest reorder</b>. For Khon Kaen: <b>${F.reorder.count} products</b> to order, estimated total <b>${F.reorder.totalFmt}</b>. Check the first line: <code>${F.reorder.top[0].sku}</code>, ${F.reorder.top[0].qty} ${F.reorder.top[0].unit}s, ${F.reorder.top[0].cost}.</p>`)}
 `,
     },
   ])}
