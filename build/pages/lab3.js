@@ -166,9 +166,16 @@ ${note('expect', '<p>The same comment is <b>edited</b>, not duplicated. It now s
       title: 'Tune the reviewer for your team',
       mins: 5,
       body: `
-<p>The reviewer is only as good as its briefing. Make it yours. Open <code>.bob/custom_modes.yaml</code> on <b>main</b> (not on the PR branch), click the pencil, and add one rule to the list under <code>Check for these Global House rules</code>. For example:</p>
+<p>The reviewer is only as good as its briefing. Make it yours. You change the rules on <b>main</b>, not on the pull request branch.</p>
+<ol>
+  <li>On the repository's <b>Code</b> tab, open the branch dropdown (top left) and switch to <b>main</b>.</li>
+  <li>Open <code>.bob/custom_modes.yaml</code>, click the pencil, and find the list under <code>Check for these Global House rules</code>. Click <b>Copy</b> on the example rule below and paste it as a new line in that list.</li>
+</ol>
 ${code('- MAJOR: a new route that returns stock data without limiting the number of rows.', 'add one line under the existing rules')}
-<p>Commit to <b>main</b>. Then go to the pull request, open the <b>Actions</b> tab, click the latest run and choose <b>Re-run all jobs</b>.</p>
+<ol start="3">
+  <li>Click <b>Commit changes</b> and commit directly to <code>main</code>.</li>
+  <li>Open the repository's <b>Actions</b> tab, click the latest <b>Bob PR review</b> run, then choose <b>Re-run all jobs</b>.</li>
+</ol>
 ${note('expect', '<p>The next review uses the new rule. You changed the reviewer without touching the pull request. That is why the rules live on the base branch.</p>')}
 ${note('tip', '<p>Good rules are specific and checkable: "a SKU is upper-cased before comparing", not "write clean code". Keep each rule to one line. Say what is a blocker and what is a nit.</p>')}
 `,
