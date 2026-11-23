@@ -19,7 +19,7 @@ export default function lab1(F) {
 ${table(
     ['Piece', 'What it is', 'Where it lives'],
     [
-      ['Mode', 'A role for Bob: what it is, which tools it may use, how it should answer', 'Created in <b>Settings, Modes</b>'],
+      ['Mode', 'A role for Bob: what it is, which tools it may use, which files it may edit', '<code>.bob/custom_modes.yaml</code>'],
       ['Skill', 'A reusable set of instructions Bob follows when the task matches', '<code>.bob/skills/&lt;name&gt;/SKILL.md</code>'],
       ['MCP server', 'A small program that gives Bob new tools, here: read our stock and sales', '<code>.bob/mcp.json</code>, added from <b>Settings, MCP</b>'],
     ],
@@ -41,35 +41,14 @@ ${note('tip', '<p>Do not look for the skill in Bob yet. Create the custom mode i
 `,
     },
     {
-      title: 'Create the custom mode in Bob settings',
+      title: 'Create the custom mode: GHH Data Analyst',
       mins: 8,
       body: `
-<p>A mode sets a role, picks which tools Bob may use, and adds its own instructions. You create this one in the settings, with no file to copy.</p>
-<ol>
-  <li>In the Bob panel, click the <b>settings</b> icon and open the <b>Modes</b> tab.</li>
-  <li>Click the button to create a new mode. The form is titled <b>Create new mode</b>.</li>
-  <li>Fill it in with the values below.</li>
-  <li>Click <b>Save</b>.</li>
-</ol>
-${table(
-    ['Field', 'What to enter'],
-    [
-      ['Slug', '<code>ghh-data-analyst</code>'],
-      ['Name', '<code>GHH Data Analyst</code>'],
-      ['Description', '<code class="wrap">Answers stock and sales questions for Global House branches and writes short reports.</code>'],
-      ['Scope', 'The workspace (this kit folder), not Global'],
-      ['Role definition', 'Paste the first block below'],
-      ['When to use', '<code class="wrap">Use this mode for questions about stock levels, reorders and sales at a Global House branch.</code>'],
-      ['Mode-specific Custom Instructions', 'Paste the second block below'],
-      ['Available Tools', 'Switch on <b>Read</b>, <b>Edit</b>, <b>MCP</b> and <b>Skill</b>. Leave the others off'],
-    ],
-  )}
-<p>Role definition:</p>
-${prompt('You are a data analyst for Siam Global House, a Thai home-improvement retailer. You answer questions about branch stock and sales using the ghh-inventory MCP tools, never from memory. You show money in Thai baht as ฿1,234.50. You answer in the language the user writes in, and you keep product names in both English and Thai when you list products.', 'Role definition')}
-<p>Mode-specific Custom Instructions:</p>
-${prompt('Always call a ghh-inventory tool before stating any stock or sales number.\nIf a tool returns an error, show the error text and ask the user what to change.\nDo not guess a branch. If the user does not name one, ask which of KKN, ROE or UDN.\nWhen you write a report, save it as Markdown under reports/ and start it with the data date.\nOnly create or edit Markdown files under reports/. Refuse any other edit and say why.\nKeep answers short: a one-line finding first, then a small table or list.', 'Custom instructions')}
-${note('tip', '<p>Bob saves the mode as a YAML file for you. You never touch it. The form has no field to lock editing to the <code>reports/</code> folder, so this mode keeps to reports because its instructions say so. That is a polite limit, not a hard one. The kit has the strict version in <code>answers/lab1/custom_modes.yaml</code> if you want to compare.</p>')}
-${stuck('If it does not work', ul(['The slug is rejected: use lowercase letters, numbers and dashes only.', 'You cannot find the create button: open the <b>Modes</b> tab and look near the search box.', 'You would rather paste a file: copy <code>answers/lab1/custom_modes.yaml</code> to <code>.bob/custom_modes.yaml</code> in the kit folder. That version also locks editing to <code>reports/</code> files.']))}
+<p>A mode sets a role, picks which tool groups Bob may use, and can restrict which files it may edit. This one can read, use MCP tools and skills, and may only write Markdown files in <code>reports/</code>.</p>
+<p>Create <code>.bob/custom_modes.yaml</code> in the kit folder and paste this in:</p>
+${code(file('answers/lab1/custom_modes.yaml'), '.bob/custom_modes.yaml')}
+${note('tip', '<p>The key line is <code>fileRegex: "^reports/.*\\\\.md$"</code>. It is a hard limit, not a polite request. If you ask this mode to edit a <code>.js</code> file, it cannot. That is why custom modes are safe to hand to non-developers.</p><p>Do not look for the mode in Bob yet. Reopen Bob <b>once</b> in step 3, and the skill and the mode both load.</p>')}
+${stuck('If it does not work', ul(['Mode not in the picker after you reopen Bob: check the file is <code>.bob/custom_modes.yaml</code> (with the dot) in the kit folder, and the first line is <code>customModes:</code>.', 'YAML is strict about spaces. Use spaces, not tabs. Copy the block as it is.', 'Still stuck: copy the file <code>answers/lab1/custom_modes.yaml</code> to <code>.bob/custom_modes.yaml</code>.']))}
 `,
     },
     {
@@ -84,7 +63,7 @@ ${stuck('If it does not work', ul(['The slug is rejected: use lowercase letters,
 </ol>
 ${note('expect', '<p>The skill is listed in the <b>Skills</b> tab and the new mode is in the picker.</p>')}
 ${note('warn', '<p><b>Cannot see the skill?</b> Reopen Bob. Quit it completely (closing the window is not enough), start it again, then look in the <b>Skills</b> tab once more.</p>')}
-${stuck('If something is still missing', ul(['Skill still not listed: the folder must be inside <code>.bob/skills/</code> in the folder you opened, and the file must be named exactly <code>SKILL.md</code>. Its first line must be <code>---</code>.', 'Mode missing: open the <b>Modes</b> tab and check it was saved and its scope is this workspace. You must have opened the kit folder.', 'By default Bob asks before using a skill. That is expected. Approve it.']))}
+${stuck('If something is still missing', ul(['Skill still not listed: the folder must be inside <code>.bob/skills/</code> in the folder you opened, and the file must be named exactly <code>SKILL.md</code>. Its first line must be <code>---</code>.', 'Mode missing: check the file is <code>.bob/custom_modes.yaml</code> (with the dot) in the kit folder, and its first line is <code>customModes:</code>. You must have opened the kit folder.', 'By default Bob asks before using a skill. That is expected. Approve it.']))}
 `,
     },
     {
@@ -152,9 +131,9 @@ ${note('expect', '<p>The first finds <code>GH-CEM-1001</code> and shows stock fo
 ${prompt('Write a one-page report for Khun Somchai: what is sold out, what is low, and the reorder list with the total cost. Save it as reports/khon-kaen-reorder.md.', 'GHH Data Analyst mode')}
 <p>The file lands in <code>reports/</code>. Now try to make the mode go outside its job:</p>
 ${prompt('Also fix a typo in package.json.', 'GHH Data Analyst mode')}
-${note('expect', '<p>Bob should refuse and say it only writes reports. A mode made in the form holds back because of its instructions. A mode loaded from the YAML file cannot edit <code>package.json</code> at all.</p>')}
+${note('expect', '<p>Bob cannot edit <code>package.json</code> in this mode. It tells you so.</p>')}
 <p>Compare with step 4:</p>
-${table(['', 'Step 4: plain Ask', 'Step 7: mode + skill + MCP'], [['Where the numbers come from', 'Bob read files and guessed the rules', 'A tool that applies the real rules'], ['Money format', 'Whatever Bob picked', '฿ with two decimals, from the skill and mode'], ['Can it change code?', 'No (Ask)', 'Reports only, by its instructions']])}
+${table(['', 'Step 4: plain Ask', 'Step 7: mode + skill + MCP'], [['Where the numbers come from', 'Bob read files and guessed the rules', 'A tool that applies the real rules'], ['Money format', 'Whatever Bob picked', '฿ with two decimals, from the skill and mode'], ['Can it change code?', 'No (Ask)', 'Only <code>reports/*.md</code>']])}
 `,
     },
   ])}

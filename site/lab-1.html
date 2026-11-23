@@ -426,7 +426,7 @@ a.ext:hover .last::after, a.ext:hover:not(:has(.last))::after { opacity: 1; }
 
 <p class="lead">Bob is only as useful as the context it has. In this lab you give it three kinds: a <b>skill</b> (how we write code), a <b>mode</b> (who Bob is for this job) and an <b>MCP server</b> (live access to our stock data). You will ask the same question before and after, and see the difference.</p>
 
-<div class="tbl"><table><thead><tr><th>Piece</th><th>What it is</th><th>Where it lives</th></tr></thead><tbody><tr><td>Mode</td><td>A role for Bob: what it is, which tools it may use, how it should answer</td><td>Created in <b>Settings, Modes</b></td></tr><tr><td>Skill</td><td>A reusable set of instructions Bob follows when the task matches</td><td><code>.bob/skills/&lt;name&gt;/SKILL.md</code></td></tr><tr><td>MCP server</td><td>A small program that gives Bob new tools, here: read our stock and sales</td><td><code>.bob/mcp.json</code>, added from <b>Settings, MCP</b></td></tr></tbody></table></div>
+<div class="tbl"><table><thead><tr><th>Piece</th><th>What it is</th><th>Where it lives</th></tr></thead><tbody><tr><td>Mode</td><td>A role for Bob: what it is, which tools it may use, which files it may edit</td><td><code>.bob/custom_modes.yaml</code></td></tr><tr><td>Skill</td><td>A reusable set of instructions Bob follows when the task matches</td><td><code>.bob/skills/&lt;name&gt;/SKILL.md</code></td></tr><tr><td>MCP server</td><td>A small program that gives Bob new tools, here: read our stock and sales</td><td><code>.bob/mcp.json</code>, added from <b>Settings, MCP</b></td></tr></tbody></table></div>
 
 <div class="steps"><section class="step" id="step-1"><div class="gutter"><span class="tag">1</span><input type="checkbox" aria-label="Mark step 1 done"></div><div class="inner"><h3>Open the kit folder and add the skill<span class="mins">8 min</span></h3>
 <p>In the Bob IDE, open the <b>kit folder</b> (the one with <code>package.json</code> in it).</p>
@@ -493,26 +493,35 @@ a.ext:hover .last::after, a.ext:hover:not(:has(.last))::after { opacity: 1; }
 </span><span class="l">Branch codes: <span class="tk-s">`KKN`</span> Khon Kaen, <span class="tk-s">`ROE`</span> Roi Et, <span class="tk-s">`UDN`</span> Udon Thani.</span></code></pre></div></div></details>
 <div class="note tip"><p class="h">Tip</p><p>Do not look for the skill in Bob yet. Create the custom mode in step 2, then reopen Bob <b>once</b> in step 3. That one reopen loads both.</p><p><b>If you cannot see the skill you added, reopen Bob.</b> Quit it completely (closing the window is not enough), start it again, and look in the <b>Skills</b> tab.</p></div>
 </div></section>
-<section class="step" id="step-2"><div class="gutter"><span class="tag">2</span><input type="checkbox" aria-label="Mark step 2 done"></div><div class="inner"><h3>Create the custom mode in Bob settings<span class="mins">8 min</span></h3>
-<p>A mode sets a role, picks which tools Bob may use, and adds its own instructions. You create this one in the settings, with no file to copy.</p>
-<ol>
-  <li>In the Bob panel, click the <b>settings</b> icon and open the <b>Modes</b> tab.</li>
-  <li>Click the button to create a new mode. The form is titled <b>Create new mode</b>.</li>
-  <li>Fill it in with the values below.</li>
-  <li>Click <b>Save</b>.</li>
-</ol>
-<div class="tbl"><table><thead><tr><th>Field</th><th>What to enter</th></tr></thead><tbody><tr><td>Slug</td><td><code>ghh-data-analyst</code></td></tr><tr><td>Name</td><td><code>GHH Data Analyst</code></td></tr><tr><td>Description</td><td><code class="wrap">Answers stock and sales questions for Global House branches and writes short reports.</code></td></tr><tr><td>Scope</td><td>The workspace (this kit folder), not Global</td></tr><tr><td>Role definition</td><td>Paste the first block below</td></tr><tr><td>When to use</td><td><code class="wrap">Use this mode for questions about stock levels, reorders and sales at a Global House branch.</code></td></tr><tr><td>Mode-specific Custom Instructions</td><td>Paste the second block below</td></tr><tr><td>Available Tools</td><td>Switch on <b>Read</b>, <b>Edit</b>, <b>MCP</b> and <b>Skill</b>. Leave the others off</td></tr></tbody></table></div>
-<p>Role definition:</p>
-<div class="prompt" data-copyable><div class="who">Role definition</div><p>You are a data analyst for Siam Global House, a Thai home-improvement retailer. You answer questions about branch stock and sales using the ghh-inventory MCP tools, never from memory. You show money in Thai baht as ฿1,234.50. You answer in the language the user writes in, and you keep product names in both English and Thai when you list products.</p><button class="copy" type="button">Copy</button></div>
-<p>Mode-specific Custom Instructions:</p>
-<div class="prompt" data-copyable><div class="who">Custom instructions</div><p>Always call a ghh-inventory tool before stating any stock or sales number.
-If a tool returns an error, show the error text and ask the user what to change.
-Do not guess a branch. If the user does not name one, ask which of KKN, ROE or UDN.
-When you write a report, save it as Markdown under reports/ and start it with the data date.
-Only create or edit Markdown files under reports/. Refuse any other edit and say why.
-Keep answers short: a one-line finding first, then a small table or list.</p><button class="copy" type="button">Copy</button></div>
-<div class="note tip"><p class="h">Tip</p><p>Bob saves the mode as a YAML file for you. You never touch it. The form has no field to lock editing to the <code>reports/</code> folder, so this mode keeps to reports because its instructions say so. That is a polite limit, not a hard one. The kit has the strict version in <code>answers/lab1/custom_modes.yaml</code> if you want to compare.</p></div>
-<details class="stuck"><summary>If it does not work</summary><div class="in"><ul><li>The slug is rejected: use lowercase letters, numbers and dashes only.</li><li>You cannot find the create button: open the <b>Modes</b> tab and look near the search box.</li><li>You would rather paste a file: copy <code>answers/lab1/custom_modes.yaml</code> to <code>.bob/custom_modes.yaml</code> in the kit folder. That version also locks editing to <code>reports/</code> files.</li></ul></div></details>
+<section class="step" id="step-2"><div class="gutter"><span class="tag">2</span><input type="checkbox" aria-label="Mark step 2 done"></div><div class="inner"><h3>Create the custom mode: GHH Data Analyst<span class="mins">8 min</span></h3>
+<p>A mode sets a role, picks which tool groups Bob may use, and can restrict which files it may edit. This one can read, use MCP tools and skills, and may only write Markdown files in <code>reports/</code>.</p>
+<p>Create <code>.bob/custom_modes.yaml</code> in the kit folder and paste this in:</p>
+<div class="code" data-copyable><div class="cap"><span class="name">.bob/custom_modes.yaml</span><button class="copy" type="button">Copy</button></div><pre><code><span class="l"><span class="tk-key">customModes</span><span class="tk-p">:</span>
+</span><span class="l">  <span class="tk-p">- </span><span class="tk-key">slug</span><span class="tk-p">:</span> <span class="tk-s">ghh-data-analyst</span>
+</span><span class="l">    <span class="tk-key">name</span><span class="tk-p">:</span> <span class="tk-s">GHH Data Analyst</span>
+</span><span class="l">    <span class="tk-key">description</span><span class="tk-p">:</span> <span class="tk-s">Answers stock and sales questions for Global House branches and writes short reports.</span>
+</span><span class="l">    <span class="tk-key">roleDefinition</span><span class="tk-p">:</span> <span class="tk-p">&gt;-</span>
+</span><span class="l"><span class="tk-t">      You are a data analyst for Siam Global House, a Thai home-improvement retailer.</span>
+</span><span class="l"><span class="tk-t">      You answer questions about branch stock and sales using the ghh-inventory MCP tools,</span>
+</span><span class="l"><span class="tk-t">      never from memory. You show money in Thai baht as ฿1,234.50. You answer in the</span>
+</span><span class="l"><span class="tk-t">      language the user writes in, and you keep product names in both English and Thai when</span>
+</span><span class="l"><span class="tk-t">      you list products.</span>
+</span><span class="l">    <span class="tk-key">whenToUse</span><span class="tk-p">:</span> <span class="tk-s">Use this mode for questions about stock levels, reorders and sales at a Global House branch.</span>
+</span><span class="l">    <span class="tk-key">customInstructions</span><span class="tk-p">:</span> <span class="tk-p">|-</span>
+</span><span class="l"><span class="tk-t">      Always call a ghh-inventory tool before stating any stock or sales number.</span>
+</span><span class="l"><span class="tk-t">      If a tool returns an error, show the error text and ask the user what to change.</span>
+</span><span class="l"><span class="tk-t">      Do not guess a branch. If the user does not name one, ask which of KKN, ROE or UDN.</span>
+</span><span class="l"><span class="tk-t">      When you write a report, save it as Markdown under reports/ and start it with the data date.</span>
+</span><span class="l"><span class="tk-t">      Keep answers short: a one-line finding first, then a small table or list.</span>
+</span><span class="l">    <span class="tk-key">groups</span><span class="tk-p">:</span>
+</span><span class="l">      <span class="tk-p">- </span><span class="tk-s">read</span>
+</span><span class="l">      <span class="tk-p">- </span><span class="tk-s">mcp</span>
+</span><span class="l">      <span class="tk-p">- </span><span class="tk-s">skill</span>
+</span><span class="l">      <span class="tk-p">- - </span><span class="tk-s">edit</span>
+</span><span class="l">        <span class="tk-p">- </span><span class="tk-key">fileRegex</span><span class="tk-p">:</span> <span class="tk-s">"^reports/.*\\.md$"</span>
+</span><span class="l">          <span class="tk-key">description</span><span class="tk-p">:</span> <span class="tk-s">Markdown reports in the reports/ folder only</span></span></code></pre></div>
+<div class="note tip"><p class="h">Tip</p><p>The key line is <code>fileRegex: "^reports/.*\\.md$"</code>. It is a hard limit, not a polite request. If you ask this mode to edit a <code>.js</code> file, it cannot. That is why custom modes are safe to hand to non-developers.</p><p>Do not look for the mode in Bob yet. Reopen Bob <b>once</b> in step 3, and the skill and the mode both load.</p></div>
+<details class="stuck"><summary>If it does not work</summary><div class="in"><ul><li>Mode not in the picker after you reopen Bob: check the file is <code>.bob/custom_modes.yaml</code> (with the dot) in the kit folder, and the first line is <code>customModes:</code>.</li><li>YAML is strict about spaces. Use spaces, not tabs. Copy the block as it is.</li><li>Still stuck: copy the file <code>answers/lab1/custom_modes.yaml</code> to <code>.bob/custom_modes.yaml</code>.</li></ul></div></details>
 </div></section>
 <section class="step" id="step-3"><div class="gutter"><span class="tag">3</span><input type="checkbox" aria-label="Mark step 3 done"></div><div class="inner"><h3>Reopen Bob once, then check the skill and the mode<span class="mins">5 min</span></h3>
 <p>Bob loads new skills and modes when it starts. You added both before this step, so you reopen Bob <b>one time</b>.</p>
@@ -523,7 +532,7 @@ Keep answers short: a one-line finding first, then a small table or list.</p><bu
 </ol>
 <div class="note expect"><p class="h">You should see</p><p>The skill is listed in the <b>Skills</b> tab and the new mode is in the picker.</p></div>
 <div class="note warn"><p class="h">Careful</p><p><b>Cannot see the skill?</b> Reopen Bob. Quit it completely (closing the window is not enough), start it again, then look in the <b>Skills</b> tab once more.</p></div>
-<details class="stuck"><summary>If something is still missing</summary><div class="in"><ul><li>Skill still not listed: the folder must be inside <code>.bob/skills/</code> in the folder you opened, and the file must be named exactly <code>SKILL.md</code>. Its first line must be <code>---</code>.</li><li>Mode missing: open the <b>Modes</b> tab and check it was saved and its scope is this workspace. You must have opened the kit folder.</li><li>By default Bob asks before using a skill. That is expected. Approve it.</li></ul></div></details>
+<details class="stuck"><summary>If something is still missing</summary><div class="in"><ul><li>Skill still not listed: the folder must be inside <code>.bob/skills/</code> in the folder you opened, and the file must be named exactly <code>SKILL.md</code>. Its first line must be <code>---</code>.</li><li>Mode missing: check the file is <code>.bob/custom_modes.yaml</code> (with the dot) in the kit folder, and its first line is <code>customModes:</code>. You must have opened the kit folder.</li><li>By default Bob asks before using a skill. That is expected. Approve it.</li></ul></div></details>
 </div></section>
 <section class="step" id="step-4"><div class="gutter"><span class="tag">4</span><input type="checkbox" aria-label="Mark step 4 done"></div><div class="inner"><h3>Meet the built-in modes, then ask a plain question<span class="mins">10 min</span></h3>
 <p>Open the Bob chat and look at the mode picker.</p>
@@ -580,9 +589,9 @@ Keep answers short: a one-line finding first, then a small table or list.</p><bu
 <div class="prompt" data-copyable><div class="who">GHH Data Analyst mode</div><p>Write a one-page report for Khun Somchai: what is sold out, what is low, and the reorder list with the total cost. Save it as reports/khon-kaen-reorder.md.</p><button class="copy" type="button">Copy</button></div>
 <p>The file lands in <code>reports/</code>. Now try to make the mode go outside its job:</p>
 <div class="prompt" data-copyable><div class="who">GHH Data Analyst mode</div><p>Also fix a typo in package.json.</p><button class="copy" type="button">Copy</button></div>
-<div class="note expect"><p class="h">You should see</p><p>Bob should refuse and say it only writes reports. A mode made in the form holds back because of its instructions. A mode loaded from the YAML file cannot edit <code>package.json</code> at all.</p></div>
+<div class="note expect"><p class="h">You should see</p><p>Bob cannot edit <code>package.json</code> in this mode. It tells you so.</p></div>
 <p>Compare with step 4:</p>
-<div class="tbl"><table><thead><tr><th></th><th>Step 4: plain Ask</th><th>Step 7: mode + skill + MCP</th></tr></thead><tbody><tr><td>Where the numbers come from</td><td>Bob read files and guessed the rules</td><td>A tool that applies the real rules</td></tr><tr><td>Money format</td><td>Whatever Bob picked</td><td>฿ with two decimals, from the skill and mode</td></tr><tr><td>Can it change code?</td><td>No (Ask)</td><td>Reports only, by its instructions</td></tr></tbody></table></div>
+<div class="tbl"><table><thead><tr><th></th><th>Step 4: plain Ask</th><th>Step 7: mode + skill + MCP</th></tr></thead><tbody><tr><td>Where the numbers come from</td><td>Bob read files and guessed the rules</td><td>A tool that applies the real rules</td></tr><tr><td>Money format</td><td>Whatever Bob picked</td><td>฿ with two decimals, from the skill and mode</td></tr><tr><td>Can it change code?</td><td>No (Ask)</td><td>Only <code>reports/*.md</code></td></tr></tbody></table></div>
 </div></section></div>
 
 <h2>What you learned</h2>
