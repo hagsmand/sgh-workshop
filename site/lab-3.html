@@ -509,7 +509,7 @@ a.ext:hover .last::after, a.ext:hover:not(:has(.last))::after { opacity: 1; }
 </span><span class="l">      <span class="tk-p">- </span><span class="tk-s">read</span></span></code></pre></div>
 <p>Read it. This is the reviewer. The part that matters most is the last line: <code>groups: - read</code>. Everything above it is the briefing: what to look for and how to write it up.</p>
 <p><b>File 2.</b> Path: <code>.github/scripts/post-review.js</code></p>
-<p>You do not need to read this one. Click <b>Copy</b> on the block below and paste it into the new file as it is. It reads <code>bob-result.json</code> and writes <code>review.md</code>. If Bob did not finish, it writes a warning instead of staying silent. The same file is in <code>lab3/ci/post-review.js</code>.</p>
+<p>Click <b>Copy</b> on the block below and paste it into the new file as it is. You do not need to read it. It reads <code>bob-result.json</code> and writes <code>review.md</code>. If Bob did not finish, it writes a warning instead of staying silent. The same file is in <code>lab3/ci/post-review.js</code>.</p>
 <div class="code" data-copyable><div class="cap"><span class="name">.github/scripts/post-review.js</span><button class="copy" type="button">Copy</button></div><pre><code><span class="l"><span class="tk-c">// Turns Bob's `--format json` result into a Markdown PR comment.</span>
 </span><span class="l"><span class="tk-c">//</span>
 </span><span class="l"><span class="tk-c">//   node post-review.js bob-result.json review.md</span>

@@ -88,7 +88,7 @@ ${stuck('If it does not work', ul(['Your key type is <b>General</b>, not Inferen
 ${code(modes, '.bob/custom_modes.yaml')}
 <p>Read it. This is the reviewer. The part that matters most is the last line: <code>groups: - read</code>. Everything above it is the briefing: what to look for and how to write it up.</p>
 <p><b>File 2.</b> Path: <code>.github/scripts/post-review.js</code></p>
-<p>You do not need to read this one. Click <b>Copy</b> on the block below and paste it into the new file as it is. It reads <code>bob-result.json</code> and writes <code>review.md</code>. If Bob did not finish, it writes a warning instead of staying silent. The same file is in <code>lab3/ci/post-review.js</code>.</p>
+<p>Click <b>Copy</b> on the block below and paste it into the new file as it is. You do not need to read it. It reads <code>bob-result.json</code> and writes <code>review.md</code>. If Bob did not finish, it writes a warning instead of staying silent. The same file is in <code>lab3/ci/post-review.js</code>.</p>
 ${code(script, '.github/scripts/post-review.js')}
 ${note('expect', '<p>Your main branch now has <code>.bob/custom_modes.yaml</code> and <code>.github/scripts/post-review.js</code>.</p>')}
 `,
