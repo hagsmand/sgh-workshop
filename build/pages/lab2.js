@@ -36,7 +36,7 @@ ${ul(['Does it build the API <b>before</b> the page?', 'Does it put the status r
 <p>Switch to <b>Agent</b> mode. Ask for the API first, with tests. Then the page.</p>
 ${prompt('Follow the plan. Build the API only: GET /api/branches, GET /api/stock, GET /api/stock/summary, as described in SPEC.md. Put the status logic in src/data.js. Add node:test tests in test/api.test.js. Run npm test and fix any failures. Do not build the web page yet.', 'Agent mode')}
 <p>Bob will ask to approve commands, such as <code>npm test</code>. Read each one, then approve. This is the approval workflow. It is the default, and it is how you stay in control.</p>
-${note('expect', `<p>Bob reports passing tests. Then you check it yourself. Start the server and open <a href="http://localhost:3000/api/stock/summary?branch=KKN">/api/stock/summary?branch=KKN</a>. You should see <code>"out": ${F.kkn.out.length}</code>, <code>"low": ${F.kkn.low.length}</code>, <code>"over": ${F.kkn.over.length}</code>.</p>`)}
+${note('expect', `<p>Bob reports passing tests. Then you check it yourself. A running server does not pick up new code. If a server is still running, click its terminal and press <kbd>Ctrl</kbd>+<kbd>C</kbd>. Then run <code>npm start</code> in <code>lab2/starter</code> and open <a href="http://localhost:3000/api/stock/summary?branch=KKN">/api/stock/summary?branch=KKN</a>. You should see <code>"out": ${F.kkn.out.length}</code>, <code>"low": ${F.kkn.low.length}</code>, <code>"over": ${F.kkn.over.length}</code>.</p>`)}
 ${table(
     ['Check this URL', 'You should see'],
     [
