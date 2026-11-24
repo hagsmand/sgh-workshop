@@ -104,7 +104,10 @@ ${code(mcpJson, '.bob/mcp.json')}
 <p>Now open Bob settings, go to <b>MCP</b>, and check <code>ghh-inventory</code> is listed and connected with four tools.</p>
 ${note('expect', '<p>The server shows as connected, with <code>get_low_stock</code>, <code>get_product</code>, <code>get_sales_summary</code> and <code>suggest_reorder</code> listed.</p>')}
 ${note('warn', '<p>The server talks to Bob over standard output. If you edit it, never use <code>console.log</code> in it. Use <code>console.error</code>. A stray <code>console.log</code> breaks the connection.</p>')}
-${stuck('If it does not work', ul(['Listed but not connected: click <b>Restart server</b> next to it in the <b>MCP</b> tab.', 'Not connected: run <code>node lab1/mcp/inventory-server.js</code> in a terminal. It should print <code>ghh-inventory MCP server ready</code> and wait. Press <kbd>Ctrl</kbd>+<kbd>C</kbd> to stop. If it crashes, run <code>npm install</code>.', 'Connected but no tools: open the server in settings and check no tool is switched off.', 'Another way to add it: <code>bob mcp add</code> exists in Bob CLI, but the file above is simpler.']))}
+${stuck('If it does not work', ul(['Listed but not connected: click <b>Restart server</b> next to it in the <b>MCP</b> tab.', 'Not connected: run the server by hand in a terminal, inside the kit folder (commands below). It should print <code>ghh-inventory MCP server ready</code> and wait. Press <kbd>Ctrl</kbd>+<kbd>C</kbd> to stop. A crash like <code>ENOENT ... data/branches.json</code> means you skipped <code>npm run setup</code>.', 'Connected but no tools: open the server in settings and check no tool is switched off.', 'Another way to add it: <code>bob mcp add</code> exists in Bob CLI, but the file above is simpler.']))}
+${code('npm install', 'terminal, step 1')}
+${code('npm run setup', 'terminal, step 2: creates the data/ folder')}
+${code('node lab1/mcp/inventory-server.js', 'terminal, step 3: should print ready and wait')}
 `,
     },
     {
