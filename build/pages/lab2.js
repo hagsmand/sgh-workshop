@@ -36,7 +36,7 @@ ${ul(['Does it build the API <b>before</b> the page?', 'Does it put the status r
 <p>Switch to <b>Agent</b> mode. Ask for the API first, with tests. Then the page.</p>
 ${prompt('Follow the plan. Build the API only: GET /api/branches, GET /api/stock, GET /api/stock/summary, as described in SPEC.md. Put the status logic in src/data.js. Add node:test tests in test/api.test.js. Run npm test and fix any failures. Do not build the web page yet.', 'Agent mode')}
 <p>Bob will ask to approve commands, such as <code>npm test</code>. Read each one, then approve. This is the approval workflow. It is the default, and it is how you stay in control.</p>
-${note('expect', `<p>Bob reports passing tests. Then you check it yourself. Start the server and open <a href="http://localhost:3000/api/stock/summary?branch=KKN">/api/stock/summary?branch=KKN</a>. You should see <code>"out": ${F.kkn.out.length}</code>, <code>"low": ${F.kkn.low.length}</code>, <code>"over": ${F.kkn.over.length}</code>.</p>`)}
+${note('expect', `<p>Bob reports passing tests. Then you check it yourself. A running server does not pick up new code. If a server is still running, click its terminal and press <kbd>Ctrl</kbd>+<kbd>C</kbd>. Then run <code>npm start</code> in <code>lab2/starter</code> and open <a href="http://localhost:3000/api/stock/summary?branch=KKN">/api/stock/summary?branch=KKN</a>. You should see <code>"out": ${F.kkn.out.length}</code>, <code>"low": ${F.kkn.low.length}</code>, <code>"over": ${F.kkn.over.length}</code>.</p>`)}
 ${table(
     ['Check this URL', 'You should see'],
     [
@@ -75,7 +75,7 @@ ${prompt('Review src/server.js and public/index.html for problems: unvalidated q
       body: `
 <p>Done early? Add the "Suggest reorder" button from the spec.</p>
 ${prompt('Add GET /api/reorder as described in SPEC.md, with tests, and a Suggest reorder button on the page that shows the list and the total estimated cost in baht.', 'Agent mode')}
-${note('expect', `<p>For Khon Kaen: <b>${F.reorder.count} products</b> to order, estimated total <b>${F.reorder.totalFmt}</b>. Check the first line: <code>${F.reorder.top[0].sku}</code>, ${F.reorder.top[0].qty} ${F.reorder.top[0].unit}s, ${F.reorder.top[0].cost}.</p>`)}
+${note('expect', `<p>Restart the server first, because Bob added a new route. Click the server's terminal, press <kbd>Ctrl</kbd>+<kbd>C</kbd>, then run <code>npm start</code> in <code>lab2/starter</code>. Open <code>http://localhost:3000</code>, choose Khon Kaen and click <b>Suggest reorder</b>. For Khon Kaen: <b>${F.reorder.count} products</b> to order, estimated total <b>${F.reorder.totalFmt}</b>. Check the first line: <code>${F.reorder.top[0].sku}</code>, ${F.reorder.top[0].qty} ${F.reorder.top[0].unit}s, ${F.reorder.top[0].cost}.</p>`)}
 `,
     },
   ])}

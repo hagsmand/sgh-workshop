@@ -509,7 +509,8 @@ a.ext:hover .last::after, a.ext:hover:not(:has(.last))::after { opacity: 1; }
 </span><span class="l">      <span class="tk-p">- </span><span class="tk-s">read</span></span></code></pre></div>
 <p>Read it. This is the reviewer. The part that matters most is the last line: <code>groups: - read</code>. Everything above it is the briefing: what to look for and how to write it up.</p>
 <p><b>File 2.</b> Path: <code>.github/scripts/post-review.js</code></p>
-<details class="stuck"><summary>Show the script (you do not need to read it)</summary><div class="in"><p>It reads <code>bob-result.json</code>, and writes <code>review.md</code>. If Bob did not finish, it writes a warning instead of staying silent. The same file is in <code>lab3/ci/post-review.js</code>.</p><div class="code" data-copyable><div class="cap"><span class="name">.github/scripts/post-review.js</span><button class="copy" type="button">Copy</button></div><pre><code><span class="l"><span class="tk-c">// Turns Bob's `--format json` result into a Markdown PR comment.</span>
+<p>Click <b>Copy</b> on the block below and paste it into the new file as it is. You do not need to read it. It reads <code>bob-result.json</code> and writes <code>review.md</code>. If Bob did not finish, it writes a warning instead of staying silent. The same file is in <code>lab3/ci/post-review.js</code>.</p>
+<div class="code" data-copyable><div class="cap"><span class="name">.github/scripts/post-review.js</span><button class="copy" type="button">Copy</button></div><pre><code><span class="l"><span class="tk-c">// Turns Bob's `--format json` result into a Markdown PR comment.</span>
 </span><span class="l"><span class="tk-c">//</span>
 </span><span class="l"><span class="tk-c">//   node post-review.js bob-result.json review.md</span>
 </span><span class="l"><span class="tk-c">//</span>
@@ -561,7 +562,7 @@ a.ext:hover .last::after, a.ext:hover:not(:has(.last))::after { opacity: 1; }
 </span><span class="l">  <span class="tk-k">try</span> { raw = <span class="tk-fn">readFileSync</span>(input, <span class="tk-s">'utf8'</span>); } <span class="tk-k">catch</span> { <span class="tk-c">/* handled as "no result" */</span> }
 </span><span class="l">  <span class="tk-fn">writeFileSync</span>(output, <span class="tk-fn">buildComment</span>(raw) + <span class="tk-s">'\n'</span>);
 </span><span class="l">  console.<span class="tk-fn">log</span>(<span class="tk-s">`Wrote ${output}`</span>);
-</span><span class="l">}</span></code></pre></div></div></details>
+</span><span class="l">}</span></code></pre></div>
 <div class="note expect"><p class="h">You should see</p><p>Your main branch now has <code>.bob/custom_modes.yaml</code> and <code>.github/scripts/post-review.js</code>.</p></div>
 </div></section>
 <section class="step" id="step-4"><div class="gutter"><span class="tag">4</span><input type="checkbox" aria-label="Mark step 4 done"></div><div class="inner"><h3>Add the workflow<span class="mins">7 min</span></h3>
@@ -792,9 +793,16 @@ a.ext:hover .last::after, a.ext:hover:not(:has(.last))::after { opacity: 1; }
 <p>You just ran a full loop: write code, Bob reviews, fix, Bob reviews again. This is what happens on every PR in your team.</p>
 </div></section>
 <section class="step" id="step-7"><div class="gutter"><span class="tag">7</span><input type="checkbox" aria-label="Mark step 7 done"></div><div class="inner"><h3>Tune the reviewer for your team<span class="mins">5 min</span></h3>
-<p>The reviewer is only as good as its briefing. Make it yours. Open <code>.bob/custom_modes.yaml</code> on <b>main</b> (not on the PR branch), click the pencil, and add one rule to the list under <code>Check for these Global House rules</code>. For example:</p>
+<p>The reviewer is only as good as its briefing. Make it yours. You change the rules on <b>main</b>, not on the pull request branch.</p>
+<ol>
+  <li>On the repository's <b>Code</b> tab, open the branch dropdown (top left) and switch to <b>main</b>.</li>
+  <li>Open <code>.bob/custom_modes.yaml</code>, click the pencil, and find the list under <code>Check for these Global House rules</code>. Click <b>Copy</b> on the example rule below and paste it as a new line in that list.</li>
+</ol>
 <div class="code short" data-copyable><div class="cap"><span class="name">add one line under the existing rules</span><button class="copy" type="button">Copy</button></div><pre><code><span class="l">- MAJOR: a new route that returns stock data without limiting the number of rows.</span></code></pre></div>
-<p>Commit to <b>main</b>. Then go to the pull request, open the <b>Actions</b> tab, click the latest run and choose <b>Re-run all jobs</b>.</p>
+<ol start="3">
+  <li>Click <b>Commit changes</b> and commit directly to <code>main</code>.</li>
+  <li>Open the repository's <b>Actions</b> tab, click the latest <b>Bob PR review</b> run, then choose <b>Re-run all jobs</b>.</li>
+</ol>
 <div class="note expect"><p class="h">You should see</p><p>The next review uses the new rule. You changed the reviewer without touching the pull request. That is why the rules live on the base branch.</p></div>
 <div class="note tip"><p class="h">Tip</p><p>Good rules are specific and checkable: "a SKU is upper-cased before comparing", not "write clean code". Keep each rule to one line. Say what is a blocker and what is a nit.</p></div>
 </div></section></div>
