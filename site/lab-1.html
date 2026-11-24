@@ -591,7 +591,7 @@ a.ext:hover .last::after, a.ext:hover:not(:has(.last))::after { opacity: 1; }
 <p>Ask the mode for a file:</p>
 <div class="prompt" data-copyable><div class="who">GHH Data Analyst mode</div><p>Write a one-page report for Khun Somchai: what is sold out, what is low, and the reorder list with the total cost. Save it as reports/khon-kaen-reorder.md.</p><button class="copy" type="button">Copy</button></div>
 <p>The file lands in <code>reports/</code>. Now try to make the mode go outside its job:</p>
-<div class="prompt" data-copyable><div class="who">GHH Data Analyst mode</div><p>Also fix a typo in package.json.</p><button class="copy" type="button">Copy</button></div>
+<div class="prompt" data-copyable><div class="who">GHH Data Analyst mode</div><p>Can you edit package.json?</p><button class="copy" type="button">Copy</button></div>
 <div class="note expect"><p class="h">You should see</p><p>Bob cannot edit <code>package.json</code> in this mode. It tells you so.</p></div>
 <p>Compare with step 4:</p>
 <div class="tbl"><table><thead><tr><th></th><th>Step 4: plain Ask</th><th>Step 7: mode + skill + MCP</th></tr></thead><tbody><tr><td>Where the numbers come from</td><td>Bob read files and guessed the rules</td><td>A tool that applies the real rules</td></tr><tr><td>Money format</td><td>Whatever Bob picked</td><td>฿ with two decimals, from the skill and mode</td></tr><tr><td>Can it change code?</td><td>No (Ask)</td><td>Only <code>reports/*.md</code></td></tr></tbody></table></div>

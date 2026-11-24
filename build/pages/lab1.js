@@ -133,7 +133,7 @@ ${note('expect', '<p>The first finds <code>GH-CEM-1001</code> and shows stock fo
 <p>Ask the mode for a file:</p>
 ${prompt('Write a one-page report for Khun Somchai: what is sold out, what is low, and the reorder list with the total cost. Save it as reports/khon-kaen-reorder.md.', 'GHH Data Analyst mode')}
 <p>The file lands in <code>reports/</code>. Now try to make the mode go outside its job:</p>
-${prompt('Also fix a typo in package.json.', 'GHH Data Analyst mode')}
+${prompt('Can you edit package.json?', 'GHH Data Analyst mode')}
 ${note('expect', '<p>Bob cannot edit <code>package.json</code> in this mode. It tells you so.</p>')}
 <p>Compare with step 4:</p>
 ${table(['', 'Step 4: plain Ask', 'Step 7: mode + skill + MCP'], [['Where the numbers come from', 'Bob read files and guessed the rules', 'A tool that applies the real rules'], ['Money format', 'Whatever Bob picked', '฿ with two decimals, from the skill and mode'], ['Can it change code?', 'No (Ask)', 'Only <code>reports/*.md</code>']])}
